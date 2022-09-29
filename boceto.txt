@@ -1,0 +1,59 @@
+BOCETO
+
+
+lo más básico para comenzar y cumplir los requisitos:
+
+
+------------------------------------------------
+MODELOS
+
+
+Productos
+	(autos, propiedades, artículos, ...)
+	ID
+	Nombre
+	Descripcion
+	Valor (precio/costo)
+	Categoría (id*1)
+	Stock
+	imagen
+
+Categorías
+	(autos: Sedan, Hack, SUV, etc.)
+	(propiedades: alq temporal, alq anual, venta, etc.)
+	(articulos: electronica, ropa, 
+	ID (*1 --> 1 a muchos productos)
+	Nombre
+
+Usuarios:
+	ID
+	email
+	Nombre
+	categoria (admin/ usuario / guest ...)
+	pass
+
+
+------------------------------------------------
+VISTAS:
+	Usuarios
+	Articulos -seleccion -busqueda -filtro
+		Articulo 	(parametrizada)
+	Categorias
+
+
+
+FORMULARIOS:
+	Usuarios:
+		Login		Django
+		Register	Django
+	Articulos	CRUD img
+	Categorias	CRUD
+
+
+------------------------------------------------
+MENU (rutas):
+	inicio				login
+	Productos /categorias
+	nosotros
+	contacto
+
