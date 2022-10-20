@@ -1,7 +1,17 @@
-BOCETO
+Zoom 19/10/22:
+Web autos (alquiler/venta/ veremos)
+
+Tareas:
+	Daniel: html base (header/nav/footer)
+	Matias: form contacto
+	Pablo: form producto (autos)
+
+		Cecilia-si aparece-: form Categorias
+		Len: se bajó del curso
 
 
-lo más básico para comenzar y cumplir los requisitos:
+
+
 
 
 ------------------------------------------------
@@ -9,21 +19,18 @@ MODELOS
 
 
 Productos
-	(autos, propiedades, artículos, ...)
-	ID
-	Nombre
+	#ID
+	Marca
+	Modelo
+	Categoria
 	Descripcion
-	Valor (precio/costo)
-	Categoría (id*1)
-	Stock
-	imagen
+	Puertas
+	Precio
+	#imagen
 
 Categorías
-	(autos: Sedan, Hack, SUV, etc.)
-	(propiedades: alq temporal, alq anual, venta, etc.)
-	(articulos: electronica, ropa, 
+	Sedan, Hack, SUV
 	ID (*1 --> 1 a muchos productos)
-	Nombre
 
 Usuarios:
 	ID
