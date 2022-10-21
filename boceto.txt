@@ -1,0 +1,66 @@
+Zoom 19/10/22:
+Web autos (alquiler/venta/ veremos)
+
+Tareas:
+	Daniel: html base (header/nav/footer)
+	Matias: form contacto
+	Pablo: form producto (autos)
+
+		Cecilia-si aparece-: form Categorias
+		Len: se bajó del curso
+
+
+
+
+
+
+------------------------------------------------
+MODELOS
+
+
+Productos
+	#ID
+	Marca
+	Modelo
+	Categoria
+	Descripcion
+	Puertas
+	Precio
+	#imagen
+
+Categorías
+	Sedan, Hack, SUV
+	ID (*1 --> 1 a muchos productos)
+
+Usuarios:
+	ID
+	email
+	Nombre
+	categoria (admin/ usuario / guest ...)
+	pass
+
+
+------------------------------------------------
+VISTAS:
+	Usuarios
+	Articulos -seleccion -busqueda -filtro
+		Articulo 	(parametrizada)
+	Categorias
+
+
+
+FORMULARIOS:
+	Usuarios:
+		Login		Django
+		Register	Django
+	Articulos	CRUD img
+	Categorias	CRUD
+
+
+------------------------------------------------
+MENU (rutas):
+	inicio				login
+	Productos /categorias
+	nosotros
+	contacto
+

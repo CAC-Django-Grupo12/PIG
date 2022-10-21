@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<h1>Vehículos</h1>
+
+<ul>
+    {% for vehiculo in listado_vehiculos %}
+        <li>
+            <p> Marca: {{ vehiculo.marca }} </p>
+            <p> Modelo: {{ vehiculo.modelo }} </p>
+            <p> Descripción: {{ vehiculo.descripcion }} </p>
+            <p> Puertas: {{ vehiculo.puertas }} </p>
+            <p> Precio: $ {{ vehiculo.precio }} </p>
+        </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock contenido %}
