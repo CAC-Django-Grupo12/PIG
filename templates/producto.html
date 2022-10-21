@@ -1,10 +1,13 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block contenido %}
-<h2>Página de producto</h2>
-<h3>ID recibido: {{ id }}</h3>
-<p>Nombre: 
-    {{ nombre|upper }}
-</p>
+
+<div class="container my-5">
+    <h2>Página de producto</h2>
+    <h3>ID recibido: {{ id }}</h3>
+    <p>Nombre: 
+        {{ nombre|upper }}
+    </p>
+</div>
 
 {% endblock contenido %}
