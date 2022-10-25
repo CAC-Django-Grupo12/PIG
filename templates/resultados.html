@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block contenido %}
+  {% load static %}
+  
+  <main>
+
+   
+    <div class="album py-5 bg-light">
+      <div class="container">
+  
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+         
+          {% for vehiculo in listado_vehiculos %}
+          {% comment %} **************************************************************** {% endcomment %}
+          <div class="col">
+            <div class="card shadow-sm">
+              {% comment %} <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> {% endcomment %}
+              <img src="{% static '/img/1.png' %}" alt="">
+                <div class="card-body">
+                <p class="card-text text-primary fw-bold">{{vehiculo.marca}}</p>
+                <p class="card-text text-primary">{{vehiculo.modelo}}</p>
+                <p class="card-text text-danger">{{vehiculo.categoria}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Comprar</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Más Información</button>
+                  </div>
+                  <small class="text-muted">{{vehiculo.precio}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} **************************************************************** {% endcomment %}
+          {% endfor %}
+
+        
+        </div>
+      </div>
+    </div>
+  
+  </main>
+  
+  {% endblock %}

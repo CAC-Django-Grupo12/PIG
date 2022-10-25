@@ -1,28 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
-    <title>Proyecto Integrador Grupal</title>
-</head>
-<header>
+    <!-- Latest compiled and minified CSS -->
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <!-- Latest compiled JavaScript -->
+    <script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
+    <title>
+      {% block titulo %}
+      Proyecto Integrador Grupal
+      {% endblock titulo %}
+    </title>
+
+    <link rel="icon" type="image/x-icon" href="{% static '/img/favicon.svg' %}" />
+        
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
-</header>
-<body>
-    <section>
-        <img src="{% static 'img/equipo.png' %}" 
-        width="40px"
-        height="40px"
-        alt="">      
-    </section>
+     
+  </head>
+  
+  <body>
+    <div class="container-fluid">
+    <header class="p-3 text-bg-dark">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <img src="{% static '/img/auto.png' %}" alt="">
+          
+          </a>
+  
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="{% url 'inicio' %}" class="nav-link px-2 text-white fs-4">Inicio</a></li>
+            <li><a href="{% url 'resultado' %}" class="nav-link px-2 text-white fs-4">Ver Autos</a></li>
+            <li><a href="{% url 'nada' %}" class="nav-link px-2 text-white fs-4">Buscar Autos</a></li>
+            <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white fs-4">Contacto</a></li>
+            <li><a href="{% url 'vehiculo' %}" class="nav-link px-2 text-white fs-4">Ingresar Vehiculo</a></li>
+            <li><a href="{% url 'nada' %}" class="nav-link px-2 text-white fs-4">Link</a></li>
+          </ul>
+  
+         {% comment %}  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Buscar..." aria-label="Buscar">
+          </form> {% endcomment %}
+  
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-light me-2">Usuarios Registrados</button>
+            <button type="button" class="btn btn-warning">Registrarse</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    </div>
 
-    {% block contenido %}
-    {% endblock contenido %}
 
-<footer>
-    <p>Powered by CAC-Grupo_12 © 2022 | Todos los derechos reservados</p>
-</footer>
-</body>
+
+    
+    <main>
+      {% block contenido %}
+      
+      {% endblock contenido %}
+    </main>
+
+    <div class="container-fluid">  <!-- container my-5  -->    
+      <!-- Footer text-lg-start --> 
+      <footer
+              class="text-center text-bg-dark text-white"
+              style="background-color: #929fba"
+              >
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: Links -->
+          <section class="">
+            <!--Grid row-->
+            <div class="row">
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h6 class="text-uppercase mb-4 font-weight-bold">
+                  Alquiler de Autos
+                </h6>
+                <p>
+                  Somos la mejor empresa de autos de Codo a Codo 4.0, porque somos la única empresa que hay.
+                </p>
+              </div>
+              <!-- Grid column -->
+    
+              <hr class="w-100 clearfix d-md-none" />
+    
+              <!-- Grid column -->
+              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h6 class="text-uppercase mb-4 font-weight-bold">Links</h6>
+                <p>
+                  <a class="nav-link text-white" href="{% url 'inicio' %}">Inicio</a>
+                </p>
+                <p>
+                  <a class="nav-link text-white">Link 1</a>
+                </p>
+                <p>
+                  <a class="nav-link text-white">Link 2</a>
+                </p>
+                <p>
+                   
+                  <a class="nav-link text-white" href="{% url 'contacto' %}">Contacto</a>
+                </p>
+              </div>
+              <!-- Grid column -->
+    
+              <hr class="w-100 clearfix d-md-none" />
+    
+              <!-- Grid column -->
+              <hr class="w-100 clearfix d-md-none" />
+    
+              <!-- Grid column -->
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                <h6 class="text-uppercase mb-4 font-weight-bold">Contacto</h6>
+                <p><i class="fas fa-home mr-3"></i> CABA, Argentina</p>
+                <p><i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+                <p><i class="fas fa-phone mr-3"></i> + 54 1234 5678</p>
+                <p><i class="fas fa-print mr-3"></i> + 54 1234 5678</p>
+              </div>
+              <!-- Grid column -->
+    
+              <!-- Grid column -->
+              <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                <h6 class="text-uppercase mb-4 font-weight-bold">Síganos</h6>
+                
+                <!-- Facebook -->
+                <a
+                   class="btn btn-primary btn-floating m-1"
+                   style="background-color: #3b5998"
+                   href="#!"
+                   role="button"
+                   ><i class="fab fa-facebook-f"></i
+                  ></a>
+                 
+                <!-- Twitter -->
+                <a
+                   class="btn btn-primary btn-floating m-1"
+                   style="background-color: #55acee"
+                   href="#!"
+                   role="button"
+                   ><i class="fab fa-twitter"></i
+                  ></a>
+    
+                <!-- Google -->
+                <a
+                   class="btn btn-primary btn-floating m-1"
+                   style="background-color: #dd4b39"
+                   href="#!"
+                   role="button"
+                   ><i class="fab fa-google"></i
+                  ></a>
+    
+                <!-- Instagram -->
+                <a
+                   class="btn btn-primary btn-floating m-1"
+                   style="background-color: #ac2bac"
+                   href="#!"
+                   role="button"
+                   ><i class="fab fa-instagram"></i
+                  ></a>
+    
+                <!-- Linkedin -->
+                <a
+                   class="btn btn-primary btn-floating m-1"
+                   style="background-color: #0082ca"
+                   href="#!"
+                   role="button"
+                   ><i class="fab fa-linkedin-in"></i
+                  ></a>
+                <!-- Github -->
+                <a
+                   class="btn btn-primary btn-floating m-1"
+                   style="background-color: #25d366"
+                   href="#!"
+                   role="button"
+                   ><i class="fab fa-whatsapp"></i
+                  ></a>
+              </div>
+            </div>
+            <!--Grid row--> 
+          </section>
+          <!-- Section: Links -->
+        </div>
+        <!-- Grid container -->
+    
+        <!-- Copyright -->
+        <div
+             class="text-center p-3"
+             style="background-color: rgba(0, 0, 0, 0.2)"
+             >
+          © 2022 Copyright:
+          <a class="nav-link text-white" href="https://www.buenosaires.gob.ar/educacion/codo-codo/"
+             >Grupo 12 - Comisión 22080 CAC 4.0</a
+            >
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <!-- Footer -->
+    </div>
+    <!-- End of .container -->
+
+
+ 
+      
+    
+
+  </body>
 </html>
