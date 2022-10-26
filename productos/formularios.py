@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ValidationError
 
 class Vehiculos(forms.Form):
 
@@ -23,7 +24,7 @@ class Vehiculos(forms.Form):
 
 
     # id=                                       # autom
-    marca= forms.CharField(max_length=20)       # tabla
+    marca= forms.CharField(max_length=20, error_messages={'required': 'Por favor completa el campo',})       # tabla
     modelo= forms.CharField(max_length=30)      # tabla
     anio = forms.IntegerField(label='Año', min_value=2017, max_value=2022, help_text='admitimos vehículos de hasta 5 años de antigüedad') 
     categoria= forms.CharField(max_length=20)   # tabla

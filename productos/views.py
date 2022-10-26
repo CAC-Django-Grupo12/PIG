@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 
 from .formularios import Vehiculos,ContactoForm
 
@@ -42,12 +43,16 @@ def index(request):
 
 def vehiculo(request):
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         form = Vehiculos(request.POST)
         if form.is_valid():
-            return HttpResponse("vehiculo OK :)")         #HttpResponseRedirect('')
+            # guardar 
+            messages.success(request,'Vehículo agregado OK')
+            #return HttpResponse("vehiculo OK :)")         #HttpResponseRedirect('')
+        else:
+            messages.warning(request,'Por favor revisa los errores')
     else:
-        print(request.GET)
+        # print(request.GET)
         form = Vehiculos()
    
     return render(request, 'vehiculo.html', {'form': form})
