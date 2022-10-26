@@ -11,9 +11,24 @@ class Vehiculos(forms.Form):
         (6,'4 puertas+portón'),
     )
 
+    ANIOS = (
+        ('','-Seleccione-'),
+        (2017,'2017'),
+        (2018,'2018'),
+        (2019,'2019'),
+        (2020,'2020'),
+        (2021,'2021'),
+        (2022,'2022'),
+    )
+
+
     # id=                                       # autom
     marca= forms.CharField(max_length=20)       # tabla
     modelo= forms.CharField(max_length=30)      # tabla
+    
+    # anio = forms.CharField(label='Año', required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[2017-2022]+', 'title':'admitimos vehículos de hasta 5 años de antigüedad'}))
+    anio = forms.ChoiceField(choices=ANIOS,initial='',widget=forms.Select(attrs={'class':'form-control', 'title':'admitimos vehículos de hasta 5 años de antigüedad'}))   
+
     categoria= forms.CharField(max_length=20)   # tabla
     descripcion= forms.CharField(label='Descripción', max_length=300, widget=forms.Textarea(attrs={'class':'form-control','rows':4}))
     # puertas = forms.CharField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[2-5]+', 'title':'entre 2 y 5'}))
