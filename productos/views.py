@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .formularios import Vehiculos,ContactoForm
 
 
 def inicio(request):
-    return render(request, "index.html")
+    # return render(request, "index.html")
+    return redirect('index')
 
 def index(request):
     listado_vehiculos = [
