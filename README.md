@@ -5,6 +5,7 @@
 ## Descripción del proyecto
 
 Web para venta vehiculos desarrollada con Django
+---
 
 ###Elementos:
 pag incicio con lista vehiculos disponibles (hardcodeada por ahora)
