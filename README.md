@@ -7,7 +7,7 @@
 Web para venta vehiculos desarrollada con Django
 ---
 
-###Elementos:
+### Elementos:
 pag incicio con lista vehiculos disponibles (hardcodeada por ahora)
 
 barra navegacion / header / footer
@@ -18,7 +18,7 @@ form contacto
 
 ---
 
-###por hacer:
+### por hacer:
 
 unificar inicio / ver autos ...
 
