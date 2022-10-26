@@ -25,13 +25,9 @@ class Vehiculos(forms.Form):
     # id=                                       # autom
     marca= forms.CharField(max_length=20)       # tabla
     modelo= forms.CharField(max_length=30)      # tabla
-    
-    # anio = forms.CharField(label='Año', required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[2017-2022]+', 'title':'admitimos vehículos de hasta 5 años de antigüedad'}))
-    anio = forms.ChoiceField(choices=ANIOS,initial='',widget=forms.Select(attrs={'class':'form-control', 'title':'admitimos vehículos de hasta 5 años de antigüedad'}))   
-
+    anio = forms.IntegerField(label='Año', min_value=2017, max_value=2022, help_text='admitimos vehículos de hasta 5 años de antigüedad') 
     categoria= forms.CharField(max_length=20)   # tabla
     descripcion= forms.CharField(label='Descripción', max_length=300, widget=forms.Textarea(attrs={'class':'form-control','rows':4}))
-    # puertas = forms.CharField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[2-5]+', 'title':'entre 2 y 5'}))
     puertas = forms.ChoiceField(choices=PUERTAS,initial='',widget=forms.Select(attrs={'class':'form-control'}))    
     precio= forms.FloatField(label='Precio $')
     # imagen= 
