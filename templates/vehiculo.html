@@ -2,11 +2,21 @@
 
 {% block contenido %}
 <div class="container  my-5">
-<h2>Vehículo</h2>
+<h2>Agregar vehículo</h2>
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+
 <form action="{% url "vehiculo" %}" method="post">
     {% csrf_token %}
 
-    {{ form.as_p }}
+    <!-- {{ form.as_p }} -->
+    <table>
+        {{form.as_table}}
+    </table>
 
     <input type='submit' value='Guardar'>
 
