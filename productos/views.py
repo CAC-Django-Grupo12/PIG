@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
-from .formularios import Vehiculos,ContactoForm
+from .formularios import Vehiculos,ContactoForm, BusquedaForm
 
 
 def inicio(request):
@@ -118,4 +118,59 @@ def producto(request, id):
 
 def nada(request):
     return render(request, "nada.html")
+
+
+def buscar(request):
+    if request.method == 'POST':
+         
+        form = BusquedaForm(request.POST)
+
+        if form.is_valid():
+            # messages.success(request,'Vehículo agregado OK')
+             
+            listado_vehiculos = [
+                    {
+                        'marca': 'TOYOTA',
+                        'modelo': 'Yaris',
+                        'categoria': 'Sedán',
+                        'descripcion': 'Año 2021, color azul, caja automática, 10.000 Km ',
+                        'puertas': '4',
+                        'precio': 4000000
+                    },
+                    {
+                        'marca': 'FIAT',
+                        'modelo': 'Palio',
+                        'categoria': 'Hachback',
+                        'descripcion': 'Año 2016, color blanco, 70.000 Km ',
+                        'puertas': '5',
+                        'precio': 2000000
+                    },
+                    {
+                        'marca': 'TOYOTA',
+                        'modelo': 'Corolla',
+                        'categoria': 'Sedán',
+                        'descripcion': 'Año 2020, Cololr gris, caja automática, 20.000 Km ',
+                        'puertas': '4',
+                        'precio': 4800000
+                    },
+                    {
+                        'marca': 'FORD',
+                        'modelo': 'Focus',
+                        'categoria': 'Sedán',
+                        'descripcion': 'Año 2000, Cololr gris, caja automática, 20.000 Km ',
+                        'puertas': '4',
+                        'precio': 4800000
+                    },
+                    ]
+
+            return render(request, 'resultados_busqueda.html',
+                  {'listado_vehiculos': listado_vehiculos})
+
+        else:
+            messages.warning(request,'Por favor revisa los errores')
+    else:
+         
+        form = BusquedaForm()
+   
+    return render(request, 'buscar.html', {'form': form})
 
