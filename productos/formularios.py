@@ -29,3 +29,21 @@ class ContactoForm(forms.Form):
     apellido = forms.CharField(label="Apellido:")
     correo = forms.EmailField(label="Correo:")
     mensaje = forms.CharField(label="Mensaje:")
+
+
+class BusquedaForm(forms.Form):
+
+    PUERTAS = (
+        ('','-Seleccione-'),
+        (2,'2 puertas'),
+        (3,'2 puertas+portón'),
+        (4,'3 puertas+portón'),
+        (5,'4 puertas'),
+        (6,'4 puertas+portón'),
+    )
+ 
+    marca= forms.CharField(max_length=20, required=False)       # tabla
+    modelo= forms.CharField(max_length=30, required=False)      # tabla
+    anio = forms.IntegerField( initial=2022 , label='Año', min_value=2017, max_value=2022, help_text='') 
+    categoria= forms.CharField(max_length=20, required=False)   # tabla
+    puertas = forms.ChoiceField( required=False,choices=PUERTAS,initial='',widget=forms.Select(attrs={'class':'form-control'}))
