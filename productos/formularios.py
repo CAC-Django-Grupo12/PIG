@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ValidationError
 
-class Vehiculos(forms.Form):
+class VehiculoForm(forms.Form):
 
     PUERTAS = (
         ('','-Seleccione-'),
