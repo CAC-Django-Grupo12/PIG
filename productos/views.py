@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
-from .formularios import Vehiculos,ContactoForm, BusquedaForm
+from .formularios import VehiculoForm,ContactoForm, BusquedaForm
 
 
 def inicio(request):
@@ -44,7 +44,7 @@ def index(request):
 def vehiculo(request):
     if request.method == 'POST':
         # print(request.POST)
-        form = Vehiculos(request.POST)
+        form = VehiculoForm(request.POST)
         if form.is_valid():
             # guardar 
             messages.success(request,'Vehículo agregado OK')
@@ -53,7 +53,7 @@ def vehiculo(request):
             messages.warning(request,'Por favor revisa los errores')
     else:
         # print(request.GET)
-        form = Vehiculos()
+        form = VehiculoForm()
    
     return render(request, 'vehiculo.html', {'form': form})
 
