@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ValidationError
 
-class Vehiculos(forms.Form):
+class VehiculoForm(forms.Form):
 
     PUERTAS = (
         ('','-Seleccione-'),
@@ -21,7 +21,12 @@ class Vehiculos(forms.Form):
     descripcion= forms.CharField(label='Descripción', max_length=300, widget=forms.Textarea(attrs={'class':'form-control','rows':4}))
     puertas = forms.ChoiceField(choices=PUERTAS,initial='',widget=forms.Select(attrs={'class':'form-control'}))    
     precio= forms.FloatField(label='Precio $')
+    fecha_publicacion= forms.DateField(label='Fecha publicación')
     # imagen= 
+
+
+class CategoriaForm(forms.Form):
+    categoria= forms.CharField(label='Categoría', max_length=20, error_messages={'required': 'Por favor completa el campo',})
 
 
 class ContactoForm(forms.Form):
