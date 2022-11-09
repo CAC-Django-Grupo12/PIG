@@ -80,7 +80,7 @@ def about(request):
 
 def resultado(request):
 
-    listado_vehiculos=Vehiculo.objects.all
+    listado_vehiculos=Vehiculo.objects.all().select_related('categoria')
 
     return render(request, 'resultados.html',
                   {'listado_vehiculos': listado_vehiculos})
@@ -101,7 +101,9 @@ def contacto(request):
     return render(request, "contacto.html", {'contacto_form': contacto_form})
 
 def producto(request, id):
-    return render(request, "producto.html", {"id": id, "nombre": "primer producto"})
+    informacion=Vehiculo.objects.select_related('categoria').get(id=id)
+    # informacion=Vehiculo.objects.get(id=id).select_related('categoria')
+    return render(request, "producto.html", {"informacion": informacion, "nombre": "primer producto"})
 
 def nada(request):
     return render(request, "nada.html")

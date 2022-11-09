@@ -22,11 +22,16 @@
                 <div class="card-body">
                 <p class="card-text text-primary fw-bold">{{vehiculo.marca}}</p>
                 <p class="card-text text-primary">{{vehiculo.modelo}}</p>
-                <p class="card-text text-danger">{{vehiculo.categoria}}</p>
+                <p class="card-text text-danger">{{vehiculo.categoria.categoria}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
+                    <a href="{% url 'producto' vehiculo.id %}" class="btn btn-sm btn-outline-secondary" role="button">Mas Información</a>
+
+                    
+
+                    {% comment %} <a href="{% url 'producto' vehiculo.id %}" title="Va producto" class="btn btn-warning"><i class="fas fa-pencil"></i></a> {% endcomment %}
                     <button type="button" class="btn btn-sm btn-outline-secondary">Comprar</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Más Información</button>
+                    {% comment %} <button type="button" class="btn btn-sm btn-outline-secondary">Más Información</button> {% endcomment %}
                   </div>
                   <small class="text-muted">{{vehiculo.precio}}</small>
                 </div>
