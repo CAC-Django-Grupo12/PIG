@@ -3,11 +3,63 @@
 {% block contenido %}
 
 <div class="container my-5">
-    <h2>Página de producto</h2>
-    <h3>ID recibido: {{ id }}</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Informacion Detallada</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Marca</td>
+                <td>{{informacion.marca}}</td>
+            </tr>
+            <tr>
+                <td>Modelo</td>
+                <td>{{informacion.modelo}}</td>
+            </tr>
+            <tr>
+                <td>Año</td>
+                <td>{{informacion.anio}}</td>
+            </tr>
+            <tr>
+                <td>Categoria</td>
+                <td>{{informacion.categoria.categoria}}</td>
+            </tr>
+            <tr>
+                <td>Descripcion</td>
+                <td>{{informacion.descripcion}}</td>
+            </tr>
+            <tr>
+                <td>Puertas</td>
+                <td>{{informacion.puertas}}</td>
+            </tr>
+            <tr>
+                <td>Precio</td>
+                <td>{{informacion.precio}}</td>
+            </tr>
+            <tr>
+                <td>Fecha de Publicación</td>
+                <td>{{informacion.fecha_publicacion}}</td>
+            </tr>
+
+
+
+        </tbody>
+    </table>
+
+   
+
+
+    {% comment %} <h2>Página de producto</h2>
+    <h3>ID recibido: {{ informacion.id }}</h3>
+    <h3>marca recibido: {{ informacion.marca }}</h3>
+    <h3>marca recibido: {{ informacion.modelo }}</h3>
     <p>Nombre: 
         {{ nombre|upper }}
-    </p>
+    </p> {% endcomment %}
 </div>
 
 {% endblock contenido %}

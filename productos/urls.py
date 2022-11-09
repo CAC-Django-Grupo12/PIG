@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('inicio/', views.inicio, name="inicio"),
     path('vehiculo/', views.vehiculo, name="vehiculo"),
+    path('categoria/', views.categoria, name="categoria"),
 
     path('resultado/', views.resultado, name="resultado"),
     path('nada/', views.nada, name="nada"),
