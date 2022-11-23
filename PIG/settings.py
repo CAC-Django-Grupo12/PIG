@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^%f#rafzmc_x6nm=eq%e8yj5qw#=v4puxa!c(q9z3w)5bdk+!9'
+# SECRET_KEY = 'django-insecure-^%f#rafzmc_x6nm=eq%e8yj5qw#=v4puxa!c(q9z3w)5bdk+!9'
+
+SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,12 +88,22 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'PIG',
-        'USER': 'postgres',
-        'PASSWORD': 'Grupo12',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        
+        # ESTO DESPUES LO BORRAMOS - NO DEBE SER VISIBLE EN GIT :)
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'PIG',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'Grupo12',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '5432',
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT"),
+
     }
 }
 
