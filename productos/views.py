@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
-from productos.models import Vehiculo
+from productos.models import Vehiculo, Categoria
 
 from .formularios import VehiculoForm,ContactoForm, BusquedaForm, CategoriaForm
 
@@ -49,6 +49,25 @@ def vehiculo(request):
         form = VehiculoForm(request.POST)
         if form.is_valid():
             # guardar 
+            marca = form.cleaned_data['marca']
+            modelo = form.cleaned_data['modelo']
+            anio = form.cleaned_data['anio']
+            #categoria = form.cleaned_data['categoria']
+            descripcion = form.cleaned_data['descripcion']
+            puertas = form.cleaned_data['puertas']
+            precio = form.cleaned_data['precio']
+            fecha_publicacion = form.cleaned_data['fecha_publicacion']
+            nuevo_vehiculo = Vehiculo(
+                marca=marca, 
+                modelo=modelo, 
+                anio=anio, 
+                #categoria=categoria, 
+                descripcion=descripcion, 
+                puertas=puertas,
+                precio=precio, 
+                fecha_publicacion=fecha_publicacion)
+            nuevo_vehiculo.save()
+
             messages.success(request,'Vehículo agregado OK')
             #return HttpResponse("vehiculo OK :)")         #HttpResponseRedirect('')
         else:
@@ -59,19 +78,44 @@ def vehiculo(request):
    
     return render(request, 'vehiculo.html', {'form': form})
 
+def categorias_index(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'categorias_index.html',{'categorias': categorias})
 
-def categoria(request):
+def categoria_nueva(request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
         if form.is_valid():
-            # guarda
-            messages.success(request,'Categoría agregada OK')
+            categoria = form.cleaned_data['categoria']
+            nueva_categoria = Categoria(categoria=categoria)
+            nueva_categoria.save()
+            #messages.success(request,'Categoría agregada OK')
+            return redirect('categorias_index')
         else:
             messages.warning(request,'Por favor revisa los errores')
     else:
         form = CategoriaForm()
    
-    return render(request, 'categoria.html', {'form': form})
+    return render(request, 'categoria_nueva.html', {'form': form})
+
+def categoria_eliminar(request,id):
+    categoria = Categoria.objects.get(pk=id)
+    categoria.delete()
+    return redirect('categorias_index')
+
+def categoria_editar(request,id):
+    categoria = Categoria.objects.get(pk=id)
+    if(request.method=='POST'):
+        form = CategoriaForm(request.POST)
+        categoria = form.cleaned_data['categoria']
+        if form.is_valid():
+            modif_categoria = Categoria(categoria=categoria)
+            modif_categoria.save()
+            return redirect('categorias_index')
+    else:
+        formulario = CategoriaForm()
+    return render(request,'categoria_editar.html',{'form':form})
+
 
 
 def about(request):
@@ -83,7 +127,7 @@ def resultado(request):
     listado_vehiculos=Vehiculo.objects.all().select_related('categoria')
 
     return render(request, 'resultados.html',
-                  {'listado_vehiculos': listado_vehiculos})
+                  {'listado_vehiculos': lisado_vehiculos})
 
 
 
