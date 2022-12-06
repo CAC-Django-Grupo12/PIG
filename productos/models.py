@@ -5,7 +5,7 @@ from django.db import models
 
 class Categoria(models.Model):
 
-    categoria= models.CharField(max_length=20)
+    categoria= models.CharField(max_length=20, verbose_name='Categoría')
 
 
 

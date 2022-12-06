@@ -6,6 +6,9 @@ from productos.models import Vehiculo, Categoria
 
 from .formularios import VehiculoForm,ContactoForm, BusquedaForm, CategoriaForm
 
+from django.views.generic import ListView
+from django.views import View
+
 
 def inicio(request):
     # return render(request, "index.html")
@@ -78,25 +81,57 @@ def vehiculo(request):
    
     return render(request, 'vehiculo.html', {'form': form})
 
-def categorias_index(request):
-    categorias = Categoria.objects.all()
-    return render(request, 'categorias_index.html',{'categorias': categorias})
 
-def categoria_nueva(request):
-    if request.method == 'POST':
-        form = CategoriaForm(request.POST)
-        if form.is_valid():
-            categoria = form.cleaned_data['categoria']
-            nueva_categoria = Categoria(categoria=categoria)
-            nueva_categoria.save()
-            #messages.success(request,'Categoría agregada OK')
-            return redirect('categorias_index')
-        else:
-            messages.warning(request,'Por favor revisa los errores')
-    else:
-        form = CategoriaForm()
+# ------------------------------------------------
+# Categorias
+# def categorias_index(request):
+#     categorias = Categoria.objects.all()
+#     return render(request, 'categorias_index.html',{'categorias': categorias})
+class CategoriasListView(ListView):
+    model = Categoria
+    context_object_name= 'categorias'
+    template_name= 'categorias_index.html'
+    #ordering= ['id']
+
+
+# def categoria_nueva(request):
+#     if request.method == 'POST':
+#         form = CategoriaForm(request.POST)
+#         if form.is_valid():
+#             categoria = form.cleaned_data['categoria']
+#             nueva_categoria = Categoria(categoria=categoria)
+#             nueva_categoria.save()
+#             #messages.success(request,'Categoría agregada OK')
+#             return redirect('categorias_index')
+#         else:
+#             messages.warning(request,'Por favor revisa los errores')
+#     else:
+#         form = CategoriaForm()
    
-    return render(request, 'categoria_nueva.html', {'form': form})
+#     return render(request, 'categoria_nueva.html', {'form': form})
+
+class CategoriaView(View):
+    form_class = CategoriaForm
+    template_name = 'categoria_nueva.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+            except:
+                form.add_error('categoria', str(ve))
+            else:
+                return redirect('categorias_index')
+        
+        return render(request, self.template_name, {'form': form})
+
+
+
 
 def categoria_eliminar(request,id):
     categoria = Categoria.objects.get(pk=id)
@@ -113,7 +148,7 @@ def categoria_editar(request,id):
             modif_categoria.save()
             return redirect('categorias_index')
     else:
-        formulario = CategoriaForm()
+        form = CategoriaForm()
     return render(request,'categoria_editar.html',{'form':form})
 
 

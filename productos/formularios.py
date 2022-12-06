@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ValidationError
+from .models import Categoria
 
 class VehiculoForm(forms.Form):
 
@@ -25,8 +26,21 @@ class VehiculoForm(forms.Form):
     # imagen= 
 
 
-class CategoriaForm(forms.Form):
-    categoria= forms.CharField(label='Categoría', max_length=20, error_messages={'required': 'Por favor completa el campo',})
+class CategoriaForm(forms.ModelForm):
+    #categoria= forms.CharField(label='Categoría', max_length=20, error_messages={'required': 'Por favor completa el campo',})
+    class Meta:
+        model = Categoria
+        fields= ['categoria']   # opcion: '__all__'
+        #exclude= ('campo',)
+        widgets = {
+            'categoria': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingresa un nombre'})
+        }
+        error_messages= {
+            'categoria': {
+                'required': 'No puede estar vacío'
+            }
+        }
+
 
 
 class ContactoForm(forms.Form):

@@ -2,24 +2,18 @@
 
 {% block contenido %}
 <div class="container  my-5">
-<h2>Agregar categoría</h2>
+    <h2>Agregar categoría</h2>
 
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" role="alert">
-    {{ message }}
-</div>
-{% endfor %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
 
-<form action="{% url "categoria_nueva" %}" method="post">
-    {% csrf_token %}
+    <form action="{% url 'categoria_nueva' %}" method="post" novalidate>
+        {% csrf_token %}
+        {% include 'categoria_form.html' %}
+    </form>
 
-    <!-- {{ form.as_p }} -->
-    <table>
-        {{form.as_table}}
-    </table>
-
-    <input type='submit' value='Guardar'>
-
-</form>
 </div>
 {% endblock contenido %}
