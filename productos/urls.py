@@ -11,6 +11,7 @@ urlpatterns = [
     #path('categoria_nueva/', views.categoria_nueva, name="categoria_nueva"),
     path('categoria_nueva/', views.CategoriaView.as_view(), name="categoria_nueva"),
     path('categoria_editar/<int:id>', views.categoria_editar, name="categoria_editar"),
+    #path('categoria_editar/<int:id>', views.CategoriaView.as_view(), name="categoria_editar"),
     path('categoria_eliminar/<int:id>', views.categoria_eliminar, name="categoria_eliminar"),
 
     path('resultado/', views.resultado, name="resultado"),

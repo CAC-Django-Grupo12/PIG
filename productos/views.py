@@ -112,10 +112,11 @@ class CategoriasListView(ListView):
 
 class CategoriaView(View):
     form_class = CategoriaForm
+    #initial = {'key': 'value'}
     template_name = 'categoria_nueva.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()
+        form = self.form_class()    #initial= self.initial)
         return render(request, self.template_name, {'form':form})
     
     def post(self, request, *args, **kwargs):
@@ -141,15 +142,14 @@ def categoria_eliminar(request,id):
 def categoria_editar(request,id):
     categoria = Categoria.objects.get(pk=id)
     if(request.method=='POST'):
-        form = CategoriaForm(request.POST)
-        categoria = form.cleaned_data['categoria']
+        form = CategoriaForm(request.POST, instance=categoria)
+        #categoria = form.cleaned_data['categoria']
         if form.is_valid():
-            modif_categoria = Categoria(categoria=categoria)
-            modif_categoria.save()
+            categoria.save()
             return redirect('categorias_index')
     else:
-        form = CategoriaForm()
-    return render(request,'categoria_editar.html',{'form':form})
+        form = CategoriaForm(instance=categoria)
+    return render(request,'categoria_editar.html',{'form':form, 'id': id})
 
 
 
