@@ -6,7 +6,8 @@ class VehiculoForm(forms.ModelForm):
 
     class Meta:
         model = Vehiculo
-        fields= '__all__'
+        fields= ['marca', 'modelo', 'anio', 'categoria', 'descripcion', 'puertas', 'precio', 'fecha_publicacion', ] 
+        #'__all__'
         #exclude= ('campo',)
         widgets = {
             'marca': forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),

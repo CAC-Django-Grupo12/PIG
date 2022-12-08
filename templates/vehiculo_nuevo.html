@@ -10,7 +10,7 @@
     </div>
     {% endfor %}
 
-    <form action="{% url 'vehiculo_nuevo' %}" method="post" novalidate>
+    <form action="{% url 'vehiculo_nuevo' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% include 'vehiculo_form.html' %}
     </form>
