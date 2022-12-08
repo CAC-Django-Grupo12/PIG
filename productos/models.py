@@ -20,4 +20,5 @@ class Vehiculo(models.Model):
     puertas = models.CharField(max_length=1)
     precio= models.FloatField()
     fecha_publicacion= models.DateField()
-    # imagen= 
+    seleccionado=models.BooleanField(default=None,null=True)
+    imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)

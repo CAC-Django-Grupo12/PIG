@@ -161,7 +161,7 @@ def resultado(request):
     listado_vehiculos=Vehiculo.objects.all().select_related('categoria')
 
     return render(request, 'resultados.html',
-                  {'listado_vehiculos': lisado_vehiculos})
+                  {'listado_vehiculos': listado_vehiculos})
 
 
 

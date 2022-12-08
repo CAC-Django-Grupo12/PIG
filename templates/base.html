@@ -33,12 +33,14 @@
           </a>
   
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{% url 'inicio' %}" class="nav-link px-2 text-white fs-4">Inicio</a></li>
-            <li><a href="{% url 'resultado' %}" class="nav-link px-2 text-white fs-4">Ver Autos</a></li>
-            <li><a href="{% url 'buscar' %}" class="nav-link px-2 text-white fs-4">Buscar Autos</a></li>
-            <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white fs-4">Contacto</a></li>
-            <li><a href="{% url 'vehiculo' %}" class="nav-link px-2 text-white fs-4">Ingresar Vehiculo</a></li>
-            <li><a href="{% url 'nada' %}" class="nav-link px-2 text-white fs-4">Link</a></li>
+            <li><a href="{% url 'inicio' %}" class="nav-link px-2 text-white fs-5">Inicio</a></li>
+            <li><a href="{% url 'resultado' %}" class="nav-link px-2 text-white fs-5">Ver Autos</a></li>
+            <li><a href="{% url 'buscar' %}" class="nav-link px-2 text-white fs-5">Buscar Autos</a></li>
+           
+            <li><a href="{% url 'vehiculo' %}" class="nav-link px-2 text-white fs-5">Ing. Vehiculos</a></li>
+            <li><a href="{% url 'categorias_index' %}" class="nav-link px-2 text-white fs-5">Ing. Categorias</a></li>
+            <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white fs-5">Contacto</a></li>
+            {% comment %} <li><a href="{% url 'nada' %}" class="nav-link px-2 text-white fs-5">Link</a></li> {% endcomment %}
           </ul>
   
          {% comment %}  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
