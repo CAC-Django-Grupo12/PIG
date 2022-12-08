@@ -46,40 +46,63 @@ def index(request):
                   {'listado_vehiculos': listado_vehiculos})
 
 
-def vehiculo(request):
-    if request.method == 'POST':
-        # print(request.POST)
-        form = VehiculoForm(request.POST)
-        if form.is_valid():
-            # guardar 
-            marca = form.cleaned_data['marca']
-            modelo = form.cleaned_data['modelo']
-            anio = form.cleaned_data['anio']
-            #categoria = form.cleaned_data['categoria']
-            descripcion = form.cleaned_data['descripcion']
-            puertas = form.cleaned_data['puertas']
-            precio = form.cleaned_data['precio']
-            fecha_publicacion = form.cleaned_data['fecha_publicacion']
-            nuevo_vehiculo = Vehiculo(
-                marca=marca, 
-                modelo=modelo, 
-                anio=anio, 
-                #categoria=categoria, 
-                descripcion=descripcion, 
-                puertas=puertas,
-                precio=precio, 
-                fecha_publicacion=fecha_publicacion)
-            nuevo_vehiculo.save()
 
-            messages.success(request,'Vehículo agregado OK')
-            #return HttpResponse("vehiculo OK :)")         #HttpResponseRedirect('')
-        else:
-            messages.warning(request,'Por favor revisa los errores')
-    else:
-        # print(request.GET)
-        form = VehiculoForm()
+class VehiculoView(View):
+    form_class = VehiculoForm
+    #initial = {'key': 'value'}
+    template_name = 'vehiculo_nuevo.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()    #initial= self.initial)
+        return render(request, self.template_name, {'form':form})
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+            except:
+                form.add_error('vehiculo', str(ve))
+            else:
+                return redirect('inicio')   # cambiar esto...
+        
+        return render(request, self.template_name, {'form': form})
+
+# def vehiculo(request):
+#     if request.method == 'POST':
+#         # print(request.POST)
+#         form = VehiculoForm(request.POST)
+#         if form.is_valid():
+#             # guardar 
+#             marca = form.cleaned_data['marca']
+#             modelo = form.cleaned_data['modelo']
+#             anio = form.cleaned_data['anio']
+#             #categoria = form.cleaned_data['categoria']
+#             descripcion = form.cleaned_data['descripcion']
+#             puertas = form.cleaned_data['puertas']
+#             precio = form.cleaned_data['precio']
+#             fecha_publicacion = form.cleaned_data['fecha_publicacion']
+#             nuevo_vehiculo = Vehiculo(
+#                 marca=marca, 
+#                 modelo=modelo, 
+#                 anio=anio, 
+#                 #categoria=categoria, 
+#                 descripcion=descripcion, 
+#                 puertas=puertas,
+#                 precio=precio, 
+#                 fecha_publicacion=fecha_publicacion)
+#             nuevo_vehiculo.save()
+
+#             messages.success(request,'Vehículo agregado OK')
+#             #return HttpResponse("vehiculo OK :)")         #HttpResponseRedirect('')
+#         else:
+#             messages.warning(request,'Por favor revisa los errores')
+#     else:
+#         # print(request.GET)
+#         form = VehiculoForm()
    
-    return render(request, 'vehiculo.html', {'form': form})
+#     return render(request, 'vehiculo.html', {'form': form})
+
 
 
 # ------------------------------------------------

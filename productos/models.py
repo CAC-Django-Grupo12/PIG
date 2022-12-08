@@ -6,7 +6,8 @@ from django.db import models
 class Categoria(models.Model):
 
     categoria= models.CharField(max_length=20, verbose_name='Categoría')
-
+    def __str__(self):
+        return self.categoria
 
 
 class Vehiculo(models.Model):
@@ -14,7 +15,6 @@ class Vehiculo(models.Model):
     marca= models.CharField(max_length=20)
     modelo= models.CharField(max_length=30)
     anio = models.IntegerField()
-    # categoria= models.CharField(max_length=20)
     categoria= models.ForeignKey(Categoria, on_delete=models.CASCADE)
     descripcion= models.CharField(max_length=300)
     puertas = models.CharField(max_length=1)
