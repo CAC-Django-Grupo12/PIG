@@ -143,7 +143,6 @@ def categoria_editar(request,id):
     categoria = Categoria.objects.get(pk=id)
     if(request.method=='POST'):
         form = CategoriaForm(request.POST, instance=categoria)
-        #categoria = form.cleaned_data['categoria']
         if form.is_valid():
             categoria.save()
             return redirect('categorias_index')
