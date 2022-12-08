@@ -9,10 +9,21 @@ class VehiculoForm(forms.ModelForm):
         fields= '__all__'
         #exclude= ('campo',)
         widgets = {
-        
+            'marca': forms.TextInput(attrs={'class': 'form-control', 'placeholder': ''}),
+            'modelo': forms.TextInput(attrs={'class': 'form-control'}),
+            'anio': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Admitimos vehículos de hasta 5 años de antigüedad'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'rows': 5,'class':'form-control'}),
+            'puertas': forms.TextInput(attrs={'class': 'form-control'}),
+            'precio': forms.TextInput(attrs={'class': 'form-control','type':'int'}),
+            'fecha_publicacion': forms.DateInput(attrs={'class': 'form-control','type':'date'}),
+            'imagen': forms.FileInput(attrs={'class':'form-control'})
+
         }
         error_messages= {
-            
+            'marca': {
+                'required': 'No puede estar vacío'
+            }            
         }
 
 
