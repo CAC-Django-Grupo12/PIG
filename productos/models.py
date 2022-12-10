@@ -22,3 +22,6 @@ class Vehiculo(models.Model):
     fecha_publicacion= models.DateField(verbose_name='Fecha publicación')
     seleccionado=models.BooleanField(default=None,null=True)
     imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)
+
+    def __str__(self):
+        return self.marca+' '+self.modelo+' '+str(self.anio)

@@ -6,7 +6,7 @@ class VehiculoForm(forms.ModelForm):
 
     class Meta:
         model = Vehiculo
-        fields= ['marca', 'modelo', 'anio', 'categoria', 'descripcion', 'puertas', 'precio', 'fecha_publicacion', ] 
+        fields= ['marca', 'modelo', 'anio', 'categoria', 'descripcion', 'puertas', 'precio', 'fecha_publicacion', 'seleccionado', 'imagen', ] 
         #'__all__'
         #exclude= ('campo',)
         widgets = {
@@ -18,7 +18,7 @@ class VehiculoForm(forms.ModelForm):
             'puertas': forms.TextInput(attrs={'class': 'form-control'}),
             'precio': forms.TextInput(attrs={'class': 'form-control','type':'int'}),
             'fecha_publicacion': forms.DateInput(attrs={'class': 'form-control','type':'date'}),
-            'imagen': forms.FileInput(attrs={'class':'form-control'})
+            'imagen': forms.FileInput(attrs={'class':'form-control', 'multiple':True})
 
         }
         error_messages= {

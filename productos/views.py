@@ -47,6 +47,12 @@ def index(request):
 
 
 
+
+class VehiculosListView(ListView):
+    model = Vehiculo
+    context_object_name= 'vehiculos'
+    template_name= 'vehiculos_index.html'
+
 class VehiculoView(View):
     form_class = VehiculoForm
     #initial = {'key': 'value'}
@@ -57,16 +63,35 @@ class VehiculoView(View):
         return render(request, self.template_name, {'form':form})
     
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             try:
                 form.save()
+
             except:
                 form.add_error('vehiculo', str(ve))
             else:
-                return redirect('inicio')   # cambiar esto...
+                return redirect('vehiculos_index')
         
         return render(request, self.template_name, {'form': form})
+
+
+def vehiculo_eliminar(request,id):
+    vehiculo = Vehiculo.objects.get(pk=id)
+    vehiculo.delete()
+    return redirect('vehiculos_index')
+
+def vehiculo_editar(request,id):
+    vehiculo = Vehiculo.objects.get(pk=id)
+    if(request.method=='POST'):
+        form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
+        if form.is_valid():
+            vehiculo.save()
+            return redirect('vehiculos_index')
+    else:
+        form = VehiculoForm(instance=vehiculo)
+    return render(request,'vehiculo_editar.html',{'form':form, 'id': id})
+
 
 # def vehiculo(request):
 #     if request.method == 'POST':
