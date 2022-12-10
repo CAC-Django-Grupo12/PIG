@@ -15,36 +15,12 @@ def inicio(request):
     return redirect('index')
 
 def index(request):
-    listado_vehiculos = [
-        {
-            'marca': 'TOYOTA',
-            'modelo': 'Yaris',
-            'categoria': 'Sedán',
-            'descripcion': 'Año 2021, color azul, caja automática, 10.000 Km ',
-            'puertas': '4',
-            'precio': 4000000
-        },
-        {
-            'marca': 'FIAT',
-            'modelo': 'Palio',
-            'categoria': 'Hachback',
-            'descripcion': 'Año 2016, color blanco, 70.000 Km ',
-            'puertas': '5',
-            'precio': 2000000
-        },
-        {
-            'marca': 'TOYOTA',
-            'modelo': 'Corolla',
-            'categoria': 'Sedán',
-            'descripcion': 'Año 2020, Cololr gris, caja automática, 20.000 Km ',
-            'puertas': '4',
-            'precio': 4800000
-        },
-        ]
 
-    return render(request, 'index.html',
+    listado_vehiculos=Vehiculo.objects.all().select_related('categoria')
+    listado_vehiculos=Vehiculo.objects.filter(seleccionado=True).select_related('categoria')
+ 
+    return render(request, 'inicial.html',
                   {'listado_vehiculos': listado_vehiculos})
-
 
 
 
