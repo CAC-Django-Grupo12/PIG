@@ -9,6 +9,14 @@ class Categoria(models.Model):
     def __str__(self):
         return self.categoria
 
+class Usuario(models.Model):
+
+    nombre_usuario= models.CharField(max_length=20, verbose_name='Nombre de Usuario')
+    nombre= models.CharField(max_length=30, verbose_name='Nombre')
+    apellido= models.CharField(max_length=30, verbose_name='Apellido')
+    def __str__(self):
+        return self.nombre_usuario
+
 
 class Vehiculo(models.Model):
 
@@ -22,6 +30,9 @@ class Vehiculo(models.Model):
     fecha_publicacion= models.DateField(verbose_name='Fecha publicación')
     seleccionado=models.BooleanField(default=None,null=True)
     imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)
-
+    usuario= models.ForeignKey(Usuario, on_delete=models.PROTECT, verbose_name='Usuario')
+    
     def __str__(self):
         return self.marca+' '+self.modelo+' '+str(self.anio)
+
+
