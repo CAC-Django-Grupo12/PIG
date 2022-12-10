@@ -18,7 +18,7 @@
           <div class="col">
             <div class="card shadow-sm">
               {% comment %} <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> {% endcomment %}
-              <img src="{% static '/img/1.png' %}" alt="">
+              <img src="{{ vehiculo.imagen.url }}"alt="No está la imagen">
                 <div class="card-body">
                 <p class="card-text text-primary fw-bold">{{vehiculo.marca}}</p>
                 <p class="card-text text-primary">{{vehiculo.modelo}}</p>
