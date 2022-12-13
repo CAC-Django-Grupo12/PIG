@@ -227,6 +227,38 @@ def nada(request):
 
 
 def buscar(request):
+
+    if request.method == 'POST':
+         
+        form = BusquedaForm(request.POST)
+
+        if (form.is_valid()):
+            
+            listado_vehiculos=Vehiculo.objects.all()
+            
+            if form.cleaned_data['marca']:
+                listado_vehiculos=Vehiculo.objects.filter(marca__icontains=form.cleaned_data['marca']).select_related('categoria')
+            if form.cleaned_data['modelo']:
+                 listado_vehiculos=listado_vehiculos.filter(modelo__icontains=form.cleaned_data['modelo']).select_related('categoria')
+            if form.cleaned_data['aniodesde']:
+                 listado_vehiculos=listado_vehiculos.filter(anio__gte=form.cleaned_data['aniodesde']).select_related('categoria')
+            if form.cleaned_data['aniohasta']:
+                 listado_vehiculos=listado_vehiculos.filter(anio__lte=form.cleaned_data['aniohasta']).select_related('categoria')
+            
+            return render(request, 'resultados_busqueda.html',
+                        {'listado_vehiculos': listado_vehiculos})
+
+        else:
+            messages.warning(request,'Por favor revisa los errores')
+    else:
+         
+        form = BusquedaForm()
+   
+    return render(request, 'buscar.html', {'form': form})
+
+""" 
+
+def buscar(request):
     if request.method == 'POST':
          
         form = BusquedaForm(request.POST)
@@ -280,3 +312,4 @@ def buscar(request):
    
     return render(request, 'buscar.html', {'form': form})
 
+ """
