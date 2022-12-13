@@ -9,6 +9,9 @@ from .formularios import VehiculoForm,ContactoForm, BusquedaForm, CategoriaForm
 from django.views.generic import ListView
 from django.views import View
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 
 def inicio(request):
     # return render(request, "index.html")
@@ -24,12 +27,12 @@ def index(request):
 
 
 
-class VehiculosListView(ListView):
+class VehiculosListView(LoginRequiredMixin, ListView):
     model = Vehiculo
     context_object_name= 'vehiculos'
     template_name= 'vehiculos_index.html'
 
-class VehiculoView(View):
+class VehiculoView(LoginRequiredMixin, View):
     form_class = VehiculoForm
     #initial = {'key': 'value'}
     template_name = 'vehiculo_nuevo.html'
@@ -51,12 +54,13 @@ class VehiculoView(View):
         
         return render(request, self.template_name, {'form': form})
 
-
+@login_required
 def vehiculo_eliminar(request,id):
     vehiculo = Vehiculo.objects.get(pk=id)
     vehiculo.delete()
     return redirect('vehiculos_index')
 
+@login_required
 def vehiculo_editar(request,id):
     vehiculo = Vehiculo.objects.get(pk=id)
     if(request.method=='POST'):
@@ -111,7 +115,7 @@ def vehiculo_editar(request,id):
 # def categorias_index(request):
 #     categorias = Categoria.objects.all()
 #     return render(request, 'categorias_index.html',{'categorias': categorias})
-class CategoriasListView(ListView):
+class CategoriasListView(LoginRequiredMixin, ListView):
     model = Categoria
     context_object_name= 'categorias'
     template_name= 'categorias_index.html'
@@ -134,7 +138,7 @@ class CategoriasListView(ListView):
    
 #     return render(request, 'categoria_nueva.html', {'form': form})
 
-class CategoriaView(View):
+class CategoriaView(LoginRequiredMixin, View):
     form_class = CategoriaForm
     #initial = {'key': 'value'}
     template_name = 'categoria_nueva.html'
@@ -157,12 +161,13 @@ class CategoriaView(View):
 
 
 
-
+@login_required
 def categoria_eliminar(request,id):
     categoria = Categoria.objects.get(pk=id)
     categoria.delete()
     return redirect('categorias_index')
 
+@login_required
 def categoria_editar(request,id):
     categoria = Categoria.objects.get(pk=id)
     if(request.method=='POST'):
