@@ -36,9 +36,10 @@
             <li><a href="{% url 'inicio' %}" class="nav-link px-2 text-white fs-5">Inicio</a></li>
             <li><a href="{% url 'resultado' %}" class="nav-link px-2 text-white fs-5">Ver Autos</a></li>
             <li><a href="{% url 'buscar' %}" class="nav-link px-2 text-white fs-5">Buscar Autos</a></li>
-           
+            {% if user.is_authenticated %}
             <li><a href="{% url 'vehiculos_index' %}" class="nav-link px-2 text-white fs-5">Vehiculos</a></li>
             <li><a href="{% url 'categorias_index' %}" class="nav-link px-2 text-white fs-5">Categorias</a></li>
+            {% endif %}
             <li><a href="{% url 'contacto' %}" class="nav-link px-2 text-white fs-5">Contacto</a></li>
             {% comment %} <li><a href="{% url 'nada' %}" class="nav-link px-2 text-white fs-5">Link</a></li> {% endcomment %}
           </ul>
@@ -49,6 +50,7 @@
   
           <div class="text-end">
             {% comment %} <button type="button" class="btn btn-outline-light me-2">Usuarios Registrados</button> {% endcomment %}
+            
             <button type="button" class="btn btn-warning">Registrarse</button>
 
             {% if user.is_authenticated %}
