@@ -67,10 +67,10 @@ class CategoriaForm(forms.ModelForm):
 
 
 class ContactoForm(forms.Form):
-    nombre = forms.CharField(label="Nombre:")
-    apellido = forms.CharField(label="Apellido:")
-    correo = forms.EmailField(label="Correo:")
-    mensaje = forms.CharField(label="Mensaje:")
+    nombre = forms.CharField(label="Nombre:", min_length=3, required=True, error_messages={'required': 'Por favor completa el Nombre'})
+    apellido = forms.CharField(label="Apellido:", min_length=3, required=True)
+    correo = forms.EmailField(label="Correo:", min_length=10, required=True)
+    mensaje = forms.CharField(label="Mensaje:", min_length=10, max_length=240, required=True, widget=forms.Textarea(attrs={'class':'form-control','rows':9,'cols':15}))
 
 
 class BusquedaForm(forms.Form):

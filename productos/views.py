@@ -191,16 +191,20 @@ def resultado(request):
 
 def contacto(request):
     #return HttpResponse("Pagina De Contacto")
-    if request.method == 'POST':
+    if request.method == "POST":
         contacto_form = ContactoForm(request.POST)
         #Si el método es POST quiere decir que el formulario ya se encuentra lleno
         #Que será enviado al servidor
+        contacto_form.is_valid()
+        print("hola mundo2")
     else:
         #Si el método "NO" es POST quiere decir que el formulario se encuentra vacío
         #Se renderiza un formulario nuevo vacío
         contacto_form = ContactoForm()
+        print("hola mundo")
         #se crea una nueva instancia de ContactoForm y se lo asigna a la variabale contacto_form
     return render(request, "contacto.html", {'contacto_form': contacto_form})
+
 
 def producto(request, id):
     informacion=Vehiculo.objects.select_related('categoria').get(id=id)
