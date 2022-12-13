@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import environ
 
+#Imports para la función de enviar correo
+from django.core.mail import send_mail
 
 env = environ.Env()
 # reading .env file
@@ -162,3 +164,13 @@ MEDIA_ROOT= BASE_DIR / 'media'
 # REGISTRATION
 LOGIN_REDIRECT_URL = "inicio"
 LOGOUT_REDIRECT_URL = "inicio"
+
+#Datos de configuración para enviar correos
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'contacto.alquiler.de.autos.cac@gmail.com'
+EMAIL_HOST_PASSWORD = 'rtnjcdyppyvszqpl'
+EMAIL_PORT = 587

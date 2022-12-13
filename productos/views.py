@@ -207,7 +207,21 @@ def contacto(request):
         mensaje = contacto_form.cleaned_data['mensaje']
         nuevo_contacto = Contacto(nombre=nombre, apellido=apellido, correo=correo, mensaje=mensaje)
         nuevo_contacto.save()
-        return redirect('contacto')
+        
+        subject = nuevo_contacto.nombre + " " + nuevo_contacto.apellido
+        from_email = nuevo_contacto.correo
+        message = nuevo_contacto.correo + " " + nuevo_contacto.mensaje
+        recipient_list = [settings.EMAIL_HOST_USER]
+        
+        send_mail(
+            subject,
+            message,
+            from_email,
+            recipient_list,
+            fail_silently=False
+            )
+
+        return redirect('inicio')
     else:
         #Si el método "NO" es POST quiere decir que el formulario se encuentra vacío
         #Se renderiza un formulario nuevo vacío
