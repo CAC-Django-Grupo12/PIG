@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 
-from productos.models import Vehiculo, Categoria
+from productos.models import Vehiculo, Categoria, Contacto
 
 from .formularios import VehiculoForm,ContactoForm, BusquedaForm, CategoriaForm
 
@@ -196,12 +196,18 @@ def contacto(request):
         #Si el método es POST quiere decir que el formulario ya se encuentra lleno
         #Que será enviado al servidor
         contacto_form.is_valid()
-        print("hola mundo2")
+        nombre = contacto_form.cleaned_data['nombre']
+        apellido = contacto_form.cleaned_data['apellido']
+        correo = contacto_form.cleaned_data['correo']
+        mensaje = contacto_form.cleaned_data['mensaje']
+        nuevo_contacto = Contacto(nombre=nombre, apellido=apellido, correo=correo, mensaje=mensaje)
+        nuevo_contacto.save()
+        return redirect('contacto')
     else:
         #Si el método "NO" es POST quiere decir que el formulario se encuentra vacío
         #Se renderiza un formulario nuevo vacío
         contacto_form = ContactoForm()
-        print("hola mundo")
+        
         #se crea una nueva instancia de ContactoForm y se lo asigna a la variabale contacto_form
     return render(request, "contacto.html", {'contacto_form': contacto_form})
 

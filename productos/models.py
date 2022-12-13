@@ -25,3 +25,10 @@ class Vehiculo(models.Model):
 
     def __str__(self):
         return self.marca+' '+self.modelo+' '+str(self.anio)
+
+
+class Contacto(models.Model):
+    nombre= models.CharField(max_length=20, verbose_name='Nombre')
+    apellido= models.CharField(max_length=20, verbose_name='Apellido')
+    correo= models.CharField(max_length=20, verbose_name='Correo')
+    mensaje= models.CharField(max_length=240, verbose_name='Mensaje')
