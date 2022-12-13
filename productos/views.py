@@ -12,6 +12,9 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+#Import para enviar correos
+from django.conf import settings
+from django.core.mail import send_mail
 
 def inicio(request):
     # return render(request, "index.html")
