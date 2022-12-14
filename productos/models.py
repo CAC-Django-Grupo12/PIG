@@ -30,5 +30,5 @@ class Vehiculo(models.Model):
 class Contacto(models.Model):
     nombre= models.CharField(max_length=20, verbose_name='Nombre')
     apellido= models.CharField(max_length=20, verbose_name='Apellido')
-    correo= models.CharField(max_length=20, verbose_name='Correo')
+    correo= models.CharField(max_length=150, verbose_name='Correo')
     mensaje= models.CharField(max_length=240, verbose_name='Mensaje')
