@@ -7,12 +7,13 @@
     <div class="card-body">
         <div class="container  my-5">
             <h2>Vehículos</h2>        
-            <a name="" id="" class="btn btn-success" href="{% url 'vehiculo_nuevo' %}" role="button"> <i class="fa-solid fa-circle-plus"></i> Nuevo</a>
+            <a name="" id="" class="btn btn-success" href="{% url 'vehiculo_nuevo' %}" role="button"  title="Nuevo"> <i class="fa-solid fa-circle-plus"></i> Nuevo</a>
             <table class="table">
                 <thead>
                     <tr>
                         <!-- <th>Id</th> -->
                         <th>Nombre</th>
+                        <th></th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -20,6 +21,9 @@
                     {% for vehiculo in vehiculos %}
                         <tr>
                             <td>{{vehiculo}}</td>
+                            <td>
+                                <img src="{{ vehiculo.imagen.url }}"alt="" width="70px">
+                            </td>
                             <td>
                                 <a href="{% url 'vehiculo_editar' vehiculo.id %}" title="Editar" class="btn btn-warning"><i class="fas fa-pencil"></i></a>
                                 <a href="{% url 'vehiculo_eliminar' vehiculo.id %}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
