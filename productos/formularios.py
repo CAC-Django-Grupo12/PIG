@@ -17,7 +17,7 @@ class VehiculoForm(forms.ModelForm):
             'descripcion': forms.Textarea(attrs={'rows': 5,'class':'form-control'}),
             'puertas': forms.TextInput(attrs={'class': 'form-control'}),
             'precio': forms.TextInput(attrs={'class': 'form-control','type':'int'}),
-            'fecha_publicacion': forms.DateInput(attrs={'class': 'form-control','type':'date'}),
+            'fecha_publicacion': forms.DateInput(attrs={'class': 'form-control','type':'text'}),
             'imagen': forms.FileInput(attrs={'class':'form-control', 'multiple':True})
 
         }
