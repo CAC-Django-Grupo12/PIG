@@ -52,8 +52,10 @@ class VehiculoView(LoginRequiredMixin, View):
         if form.is_valid():
             try:
                 form.save()
+                messages.success(request,'Vehículo agregado OK')          
 
             except:
+                messages.error(request,'Ocurrió un error al agregar vehículo...')
                 form.add_error('vehiculo', str(ve))
             else:
                 return redirect('vehiculos_index')
@@ -64,6 +66,7 @@ class VehiculoView(LoginRequiredMixin, View):
 def vehiculo_eliminar(request,id):
     vehiculo = Vehiculo.objects.get(pk=id)
     vehiculo.delete()
+    messages.error(request,'Vehículo eliminado OK') 
     return redirect('vehiculos_index')
 
 @login_required
@@ -73,6 +76,7 @@ def vehiculo_editar(request,id):
         form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
         if form.is_valid():
             vehiculo.save()
+            messages.info(request,'Vehículo modificado OK')
             return redirect('vehiculos_index')
     else:
         form = VehiculoForm(instance=vehiculo)
@@ -158,6 +162,7 @@ class CategoriaView(LoginRequiredMixin, View):
         if form.is_valid():
             try:
                 form.save()
+                messages.success(request,'Categoría agregada OK')   
             except:
                 form.add_error('categoria', str(ve))
             else:
@@ -171,6 +176,7 @@ class CategoriaView(LoginRequiredMixin, View):
 def categoria_eliminar(request,id):
     categoria = Categoria.objects.get(pk=id)
     categoria.delete()
+    messages.error(request,'Categoría eliminada OK')   
     return redirect('categorias_index')
 
 @login_required
@@ -180,6 +186,7 @@ def categoria_editar(request,id):
         form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
             categoria.save()
+            messages.info(request,'Categoría modificada OK')   
             return redirect('categorias_index')
     else:
         form = CategoriaForm(instance=categoria)
