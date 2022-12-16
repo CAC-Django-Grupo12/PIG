@@ -32,25 +32,7 @@
                         </tr>
                     {% endfor %}
 
-
-                    <div class="pagination  justify-content-center" class="btn-group" role="group" aria-label="Item pagination">
-                        <span class="step-links">
-                            {% if page_obj.has_previous %}
-                                <a href="?page={{ items_page.previous_page_number }}" class="btn btn-outline-primary" title="Primera">&laquo;</a>
-                                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary" title="Anterior">&lt;</a>
-                            {% endif %}
-                    
-                            <span class="current">
-                                Pág {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-                            </span>
-                    
-                            {% if page_obj.has_next %}
-                                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary" title="Siguiente">&gt;</a>
-                                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary" title="Última">&raquo;</a>
-                            {% endif %}
-                        </span>
-                    </div>
-
+                    {% include 'pagination.html' %}
 
                 {% else %}
                     <p>No hay items a mostrar</p>
