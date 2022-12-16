@@ -16,6 +16,9 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
 
+from django.core.paginator import Paginator
+
+
 def inicio(request):
     # return render(request, "index.html")
     return redirect('index')
@@ -29,8 +32,8 @@ def index(request):
                   {'listado_vehiculos': listado_vehiculos})
 
 
-
 class VehiculosListView(LoginRequiredMixin, ListView):
+    paginate_by= 5
     model = Vehiculo
     context_object_name= 'vehiculos'
     template_name= 'vehiculos_index.html'
