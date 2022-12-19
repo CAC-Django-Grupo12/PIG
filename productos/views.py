@@ -199,23 +199,35 @@ class CategoriaView(LoginRequiredMixin, View):
 
 @login_required
 def categoria_eliminar(request,id):
-    categoria = Categoria.objects.get(pk=id)
-    categoria.delete()
-    messages.error(request,'Categoría eliminada OK')   
-    return redirect('categorias_index')
+    try:
+        categoria = Categoria.objects.get(pk=id)
+        categoria.delete()
+        messages.error(request,'Categoría eliminada OK')   
+        return redirect('categorias_index')
+    except:     # Categoria.DoesNotExist:
+        return redirect('Error404')
+
 
 @login_required
 def categoria_editar(request,id):
-    categoria = Categoria.objects.get(pk=id)
-    if(request.method=='POST'):
-        form = CategoriaForm(request.POST, instance=categoria)
-        if form.is_valid():
-            categoria.save()
-            messages.info(request,'Categoría modificada OK')   
-            return redirect('categorias_index')
-    else:
-        form = CategoriaForm(instance=categoria)
-    return render(request,'categoria_editar.html',{'form':form, 'id': id})
+    try:
+        categoria = Categoria.objects.get(pk=id)
+        if(request.method=='POST'):
+            form = CategoriaForm(request.POST, instance=categoria)
+            if form.is_valid():
+                try:
+                    categoria.save()
+                    messages.info(request,'Categoría modificada OK')   
+                    return redirect('categorias_index')
+                except:     # Categoria.DoesNotExist:
+                    return redirect('Error404')
+
+        else:
+            form = CategoriaForm(instance=categoria)
+        return render(request,'categoria_editar.html',{'form':form, 'id': id})
+    except:
+        return redirect('Error404')
+
 
 
 
@@ -308,3 +320,6 @@ def buscar(request):
    
     return render(request, 'buscar.html', {'form': form})
 
+
+def Error404(request):
+    return render(request, "Error404.html")
