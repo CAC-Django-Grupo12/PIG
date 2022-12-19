@@ -72,6 +72,7 @@ def vehiculo_eliminar(request,id):
 @login_required
 def vehiculo_editar(request,id):
     vehiculo = Vehiculo.objects.get(pk=id)
+    vehiculo_original = vehiculo
     if(request.method=='POST'):
         form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
         if form.is_valid():
@@ -81,6 +82,30 @@ def vehiculo_editar(request,id):
     else:
         form = VehiculoForm(instance=vehiculo)
     return render(request,'vehiculo_editar.html',{'form':form, 'id': id})
+
+@login_required
+def vehiculo_duplicar(request,id):
+    vehiculo_origen = Vehiculo.objects.get(pk=id)
+
+    vehiculo = Vehiculo(
+        marca=vehiculo_origen.marca, 
+        modelo=vehiculo_origen.modelo, 
+        anio=vehiculo_origen.anio, 
+        categoria=vehiculo_origen.categoria, 
+        puertas=vehiculo_origen.puertas,
+        precio=vehiculo_origen.precio,
+        imagen=vehiculo_origen.imagen,
+    )
+
+    if(request.method=='POST'):
+        form = VehiculoForm(request.POST, request.FILES, instance=vehiculo    )
+        if form.is_valid():
+            vehiculo.save()
+            messages.info(request,'Vehículo duplicado OK')
+            return redirect('vehiculos_index')
+    else:
+        form = VehiculoForm(instance= vehiculo)
+    return render(request,'vehiculo_duplicar.html',{'form':form, 'id': id})
 
 
 # def vehiculo(request):

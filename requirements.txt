@@ -7,4 +7,8 @@ pytz==2022.2.1
 sqlparse==0.4.3
 Pillow==9.3.0
 
+#penpyxl==3.0.10
+#pandas==1.5.2
+# necesarios para correr  python manage.py runscript prueba , carga autos de xls
+
 # ejecutar: pip install -r requirements.txt  dentro del ambiente virtual

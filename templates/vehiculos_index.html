@@ -30,6 +30,7 @@
                             </td>
                             <td>
                                 <a href="{% url 'vehiculo_editar' vehiculo.id %}" title="Editar" class="btn btn-warning"><i class="fas fa-pencil"></i></a>
+                                <a href="{% url 'vehiculo_duplicar' vehiculo.id %}" title="Duplicar" class="btn btn-info"><i class="fas fa-copy"></i></a>
                                 <a href="{% url 'vehiculo_eliminar' vehiculo.id %}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
