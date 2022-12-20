@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 # Create your models here.
 
@@ -27,8 +28,8 @@ class Vehiculo(models.Model):
     descripcion= models.CharField(max_length=300, verbose_name='Descripción')
     puertas = models.CharField(max_length=1)
     precio= models.FloatField()
-    fecha_publicacion= models.DateField(verbose_name='Fecha publicación')
-    seleccionado=models.BooleanField(default=None,null=True)
+    fecha_publicacion= models.DateField(verbose_name='Fecha publicación', default=None, null=True  )
+    seleccionado=models.BooleanField(default=False,null=True)
     imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)
     usuario= models.ForeignKey(Usuario, on_delete=models.PROTECT, verbose_name='Usuario')
     
@@ -36,3 +37,8 @@ class Vehiculo(models.Model):
         return self.marca+' '+self.modelo+' '+str(self.anio)
 
 
+class Contacto(models.Model):
+    nombre= models.CharField(max_length=20, verbose_name='Nombre')
+    apellido= models.CharField(max_length=20, verbose_name='Apellido')
+    correo= models.CharField(max_length=150, verbose_name='Correo')
+    mensaje= models.CharField(max_length=240, verbose_name='Mensaje')
