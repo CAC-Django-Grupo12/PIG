@@ -16,7 +16,18 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
 
+#Paginacion
 from django.core.paginator import Paginator
+
+#Import para generar PDF
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+from reportlab.lib.units import mm
+import qrcode
+from os import remove
+import matplotlib.pyplot as plt
 
 
 def inicio(request):
@@ -106,6 +117,88 @@ def vehiculo_duplicar(request,id):
     else:
         form = VehiculoForm(instance= vehiculo)
     return render(request,'vehiculo_duplicar.html',{'form':form, 'id': id})
+
+
+@login_required
+def vehiculo_pdf(request,id):
+    try:
+        vehiculo = Vehiculo.objects.get(pk=id)
+        try:
+
+            # Create a file-like buffer to receive PDF data.
+            buffer = io.BytesIO()
+
+            # Create the PDF object, using the buffer as its "file."
+            p = canvas.Canvas(buffer)
+
+            # Draw things on the PDF. Here's where the PDF generation happens.
+            # See the ReportLab documentation for the full list of functionality.
+            
+            p.drawString       (100, 800, vehiculo.marca+" "+vehiculo.modelo)
+            p.drawString       (100, 780, vehiculo.categoria.categoria)
+            
+            p.line             (100,760,500,760)     #linea
+            
+            imagen = ImageReader('.'+vehiculo.imagen.url)
+            #imagen= ImageReader('https://picsum.photos/300/200')
+            p.drawImage(imagen,  100,600, width=60*mm, height=40*mm , mask=None, preserveAspectRatio=True)
+
+            # QR
+            qr = qrcode.make('http://127.0.0.1:8000/accounts/login/')
+            qr_file = open(".\static\img\qr.png", "wb")     #mejorar esto
+            qr.save(qr_file)
+            qr_file.close()
+            imagen = ImageReader(".\static\img\qr.png")     #
+            p.drawImage(imagen,  350, 400,  width=50*mm , preserveAspectRatio=True)
+            remove(".\static\img\qr.png")
+
+
+            # Grafico
+                                    # advierte error por consola, funciona ok
+            # datos
+            # meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,]
+            # ventas = [200, 180, 250, 310, 290, 250, 220, 180, 200, 280, 350, 300]
+            # plt.bar(meses, ventas)
+            
+            fig, ax = plt.subplots()
+            marcas = ['Toyota', 'Fiat', 'Ford', 'VolksWagen']
+            counts = [100, 60, 30, 55]
+            bar_labels = ['Toyota', 'Fiat', 'Ford', 'VW']
+            bar_colors = ['tab:red', 'tab:blue', 'tab:green', 'tab:orange']
+
+            ax.bar(marcas, counts, label=bar_labels, color=bar_colors)
+
+            ax.set_ylabel('Ventas [unidades]')
+            ax.set_xlabel('Principales Marcas')
+            ax.set_title('Ventas por marcas')
+            ax.legend(title='Colores')
+
+            plt.savefig(".\static\img\grafico.png")             #
+            imagen = ImageReader(".\static\img\grafico.png")    #
+            p.drawImage(imagen,  100, 100,  width=100*mm , preserveAspectRatio=True)
+            remove(".\static\img\grafico.png")                  #
+
+
+
+            # Close the PDF object cleanly, and we're done.
+            p.showPage()
+            p.save()
+
+            # FileResponse sets the Content-Disposition header so that browsers
+            # present the option to save the file.
+            buffer.seek(0)
+
+            #messages.info(request,'PDF generado OK')   
+            return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
+
+            # return redirect('vehiculos_index')
+        except:
+            messages.info(request,'Error al generar el PDF')   
+            return redirect('Error404')
+
+    except:
+        messages.info(request,'Error al generar el PDF /')   
+        return redirect('Error404')
 
 
 # def vehiculo(request):
