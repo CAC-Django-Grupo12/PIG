@@ -22,6 +22,7 @@ from django.core.paginator import Paginator
 #Import para generar PDF
 import io
 from django.http import FileResponse
+
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.units import mm

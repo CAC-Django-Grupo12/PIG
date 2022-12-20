@@ -88,19 +88,23 @@ WSGI_APPLICATION = 'PIG.wsgi.application'
 
 DATABASES = {
     'default': {
-       
-        'ENGINE': 'django.db.backends.mysql',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        
+        # ESTO DESPUES LO BORRAMOS - NO DEBE SER VISIBLE EN GIT :)
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'PIG',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'Grupo12',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '5432',
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env("DATABASE_NAME"),
         'USER': env("DATABASE_USER"),
         'PASSWORD': env("DATABASE_PASSWORD"),
         'HOST': env("DATABASE_HOST"),
         'PORT': env("DATABASE_PORT"),
-        'OPTIONS': {
-            # Enable MySQL strict mode. "MySQL's Strict Mode fixes many data
-            # integrity problems in MySQL, such as data truncation upon
-            # insertion, by escalating warnings into errors."
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
 
     }
 }

@@ -1,4 +1,4 @@
-from productos.models import Vehiculo, Categoria
+from productos.models import Vehiculo, Categoria, Usuario
 import pandas as pd
 
 
@@ -14,5 +14,6 @@ def run():
         cat= df.iloc[i]['categoria']
         #categoria=Categoria.objects.first()
         categoria=Categoria.objects.get(id=cat)
-        vehiculo=Vehiculo(marca= df.iloc[i]['marca'], modelo= df.iloc[i]['modelo'],anio = df.iloc[i]['anio'],categoria= categoria,puertas = 4, descripcion=df.iloc[i]['tipo'], precio=df.iloc[i]['valor'],fecha_publicacion= "2022-01-01",imagen=df.iloc[i]['imagen'],seleccionado=df.iloc[i]['seleccionado'])
+        usuario=Usuario.objects.get(id=1)
+        vehiculo=Vehiculo(marca= df.iloc[i]['marca'], modelo= df.iloc[i]['modelo'],anio = df.iloc[i]['anio'],categoria= categoria,puertas = 4, descripcion=df.iloc[i]['tipo'], precio=df.iloc[i]['valor'],fecha_publicacion= "2022-01-01",imagen=df.iloc[i]['imagen'],seleccionado=df.iloc[i]['seleccionado'],usuario=usuario)
         vehiculo.save()
