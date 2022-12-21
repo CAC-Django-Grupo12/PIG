@@ -1,0 +1,105 @@
+Guía despliegue en  render.com
+Render.com permite desplegar proyectos en Django , admite PostgreSQL
+Se suben desde repo en github
+
+
+Video explicativo de Fazt:
+https://www.youtube.com/watch?v=GE0Q8YNKNgs&t=2s
+
+
+creo cuenta en render.com  asociada a github
+
+guía: https://render.com/docs/deploy-django
+Actualizaciones necesarias en la aplicacion:
+settings.py:
+    cambios sugeridos render.com
+    /// actualmente
+
+    import os  [agregado]
+    /// import environ
+
+    SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+    ///SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key") [No agregado]
+
+    DEBUG = 'RENDER' not in os.environ  [agregado]
+    ///DEBUG = True
+
+    ALLOWED_HOSTS = []
+    RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+    if RENDER_EXTERNAL_HOSTNAME:
+        ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+
+
+
+En render.com:
+Creo una db PostgreSQL
+    Name: PIG   es nombre de la conexion en render.com
+    DBase: dejo aleatorio ...
+    version: 15
+    plan: free  :)  RAM:256, Almacenamiento: 1G, CPU compartida
+    resto dejo como esta
+    * VALIDEZ: 3 MESES *
+
+
+En el entorno virtual instalo 2 modulos con pip install:
+    dj-database-url psycopg2-binary 
+
+En settings.py los importo:
+    import dj_database_url
+
+En DATABASES:
+    ... ver esto ...
+
+
+Statics files:
+    instalo: whitenoise[brotli]
+agrego en MIDDLEWARE:
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
+en settings:
+    if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
+        # in your application directory on Render.
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+        # Turn on WhiteNoise storage backend that takes care of compressing static files
+        # and creating unique names for each version so they can safely be cached forever.
+        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+Creo un build.sh:
+    #!/usr/bin/env bash
+    # exit on error
+    set -o errexit
+
+    poetry install
+
+    python manage.py collectstatic --no-input
+    python manage.py migrate
+
+    [este buils ejecutará varios comandos seguidos en el servidor, 
+    instala requerimientos, crea carpetas para estaticos, ejecuta migraciones
+    el servidor es Linux]
+
+Abro un terminal de GitBash:
+    chmod a+x build.sh
+    [Esto otorga permiso de ejecutable a build.sh]
+
+Instalo gunicorn:
+    pip install gunicorn
+    [esto es para servir contenido estatico (imagenes, scc) en el servidor]
+
+
+Actualizo requirements.txt
+    pip freeze > requirements.txt
+    ó
+    pip freeze
+    copiar todo
+    reemplazar en requirements.txt 
+    (esto es util cuando requirements tiene comentarios, etc.)
+
+
+Subir todos los cambios al repo en github
+
+
+
+Abro otro Dashboard en render.com:
+Creo New web service
