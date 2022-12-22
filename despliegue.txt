@@ -100,6 +100,35 @@ Actualizo requirements.txt
 Subir todos los cambios al repo en github
 
 
-
 Abro otro Dashboard en render.com:
 Creo New web service
+Lo relaciono con Github (pide contraseña)
+Configurar account:
+abre github para instalar allí Render
+seleccionar el repo donde instalar render
+darle permisos
+instalar
+
+
+Volviendo a render.com
+dar  conectar en el proyecto
+configurar: (lo demas se deja por defecto)
+    nombre: 
+    build command: ./build.sh
+    start command: gunicorn PIG wsgi 
+    Save
+
+En Environment generar las 3 keys:
+    DATABASE_URL: copiar de internal database URL
+    (Dashboard / Postgre / Conexiones)
+
+    PYTHON_VERSION: 3.10.6
+
+    SECRET_KEY: poner algo solido  o  tomar de https://randomkeygen.com/
+
+    Save
+
+Con Cada cambio guardado render intenta desplegar nuevamente, 
+
+El 1er despliegue demora, porque tiene que instalar todas las dependencias, y es plan gratuito :)
+
