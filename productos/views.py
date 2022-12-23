@@ -29,6 +29,9 @@ import qrcode
 from os import remove
 import matplotlib.pyplot as plt
 
+import os
+
+
 
 def inicio(request):
     # return render(request, "index.html")
@@ -67,7 +70,7 @@ class VehiculoView(LoginRequiredMixin, View):
 
             except:
                 messages.error(request,'Ocurrió un error al agregar vehículo...')
-                form.add_error('vehiculo', str(ve))
+                #form.add_error('vehiculo', str(ve))
             else:
                 return redirect('vehiculos_index')
         
@@ -75,9 +78,22 @@ class VehiculoView(LoginRequiredMixin, View):
 
 @login_required
 def vehiculo_eliminar(request,id):
-    vehiculo = Vehiculo.objects.get(pk=id)
-    vehiculo.delete()
-    messages.error(request,'Vehículo eliminado OK') 
+    try:
+        vehiculo = Vehiculo.objects.get(pk=id)
+        
+        # comprueba y elimina imagen
+        if os.path.exists('.'+vehiculo.imagen.url) and os.path.isfile('.'+vehiculo.imagen.url):
+            try:
+                os.remove('.'+vehiculo.imagen.url)
+                messages.error(request,'Imagen eliminada OK'+' -ID: '+str(id))
+            except:
+                messages.error(request,'No se encontró la imagen para eliminar...'+' -ID: '+str(id))
+        
+        vehiculo.delete()
+        messages.error(request,'Vehículo eliminado OK') 
+    except:
+        messages.error(request,'Error al eliminar vehículo...') 
+
     return redirect('vehiculos_index')
 
 @login_required
