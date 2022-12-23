@@ -1,5 +1,6 @@
 from django.db import models
-from datetime import date
+#from datetime import date
+from PIL import Image as Im
 
 # Create your models here.
 
@@ -26,6 +27,16 @@ class Vehiculo(models.Model):
 
     def __str__(self):
         return self.marca+' '+self.modelo+' '+str(self.anio)
+    
+    def save(self):
+        super().save()
+        img = Im.open(self.imagen.path)
+        # resize
+        if img.height > 300 or omg.width > 300:
+            output_size = (800,800)
+            img.thumbnail(output_size)
+            img.save(self.imagen.path)
+
 
 
 class Contacto(models.Model):
