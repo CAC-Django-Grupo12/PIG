@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 
+{% block js  %}
+{% comment %} Confirmacion eliminar {% endcomment %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function eliminarVehiculo(id) {
+        console.log(id)
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción elimina el Vehículo y no se puede deshacer...',
+            icon: 'question',
+            showCancelButton: true,
+            cancelButtonText: 'No, cancelar',
+            confirmButtonText: 'Si, Eliminar', 
+            reverseButtons: true, 
+            confirmButtonColor: "#dc3545"
+        })
+        .then(function(result) {
+            if(result.isConfirmed) {
+                window.location.href = '/vehiculo_eliminar/'+id
+            }
+        })
+    }
+</script>
+{% endblock js %}
+
+
 {% block contenido %}
 
 <div class="card">
@@ -7,6 +33,7 @@
         <div class="container  my-5">
 
             {% include 'messages.html' %}
+
 
             <h2>Vehículos</h2>        
             <a name="" id="" class="btn btn-success" href="{% url 'vehiculo_nuevo' %}" role="button"  title="Nuevo"> <i class="fa-solid fa-circle-plus"></i> Nuevo</a>
@@ -32,7 +59,8 @@
                                 <a href="{% url 'vehiculo_editar' vehiculo.id %}" title="Editar" class="btn btn-warning"><i class="fas fa-pencil"></i></a>
                                 <a href="{% url 'vehiculo_duplicar' vehiculo.id %}" title="Duplicar" class="btn btn-info"><i class="fas fa-copy"></i></a>
                                 <a href="{% url 'vehiculo_pdf' vehiculo.id %}" title="Pdf" class="btn btn-secondary"><i class="fas fa-file-pdf"></i></a>
-                                <a href="{% url 'vehiculo_eliminar' vehiculo.id %}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                {% comment %} <a href="{% url 'vehiculo_eliminar' vehiculo.id %}" title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a> {% endcomment %}
+                                <a href="#" onclick=eliminarVehiculo({{vehiculo.id}}) title="Eliminar" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -48,5 +76,7 @@
         </div>
     </div>
 </div>
+
+{% comment %} <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> {% endcomment %}
 
 {% endblock contenido %}
