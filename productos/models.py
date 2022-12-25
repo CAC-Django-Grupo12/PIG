@@ -32,7 +32,7 @@ class Vehiculo(models.Model):
         super().save()
         img = Im.open(self.imagen.path)
         # resize
-        if img.height > 300 or omg.width > 300:
+        if img.height > 800 or img.width > 800:
             output_size = (800,800)
             img.thumbnail(output_size)
             img.save(self.imagen.path)
