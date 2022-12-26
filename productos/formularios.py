@@ -16,7 +16,8 @@ class VehiculoForm(forms.ModelForm):
             'categoria': forms.Select(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'rows': 5,'class':'form-control'}),
             'puertas': forms.TextInput(attrs={'class': 'form-control'}),
-            'precio': forms.TextInput(attrs={'class': 'form-control','type':'int'}),
+            #'precio': forms.TextInput(attrs={'class': 'precio','type':'int'}),
+            'precio': forms.NumberInput(attrs={'class': 'precio form-control','type':'int'}),
             'fecha_publicacion': forms.DateInput(attrs={'class': 'form-control','type':'text'}),
             'seleccionado': forms.CheckboxInput(attrs={'class': 'form-check-input'}), 
             'imagen': forms.FileInput(attrs={'class':'form-control', 'multiple':True})

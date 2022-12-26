@@ -1,5 +1,10 @@
+<style>
+    .precio {color: blue;}
+</style>
+
+
 {% for campo in form %}
-    <div class="form-group">
+<div class="form-group">
         <label for="">{{campo.label}}</label>
         {{campo}}
     </div>
@@ -11,3 +16,63 @@
         <a href="{% url 'vehiculos_index' %}" class="btn btn-secondary">Cancelar</a>        
     </div>
 </div>
+
+
+<script>
+    //variables globales para definir el separador de millares y decimales
+    //Para coma millares y punto en decimales (USA)
+    // const MILLARES=",";
+    // const DECIMALES=".";
+    // const DTFLOCAL = new Intl.NumberFormat('en-US');
+    //Para coma decimal y punto en millares (ESPAÑA)
+    const MILLARES=".";
+    const DECIMALES=",";
+    const DTFLOCAL = new Intl.NumberFormat('es-ES');
+
+    // Formatear solamente numeros enteros positivos
+    function integerFormatPositivo(e) {
+        console.log(this.value)
+        if (this.value === "") {
+            return;
+        }
+        // Obtenemos un array con el numero y los decimales si hay
+        let contenido = this.value.replace(/[^0-9]/g, "");
+        // añadimos los separadores de miles al primer numero del array
+        contenido = contenido.length ? DTFLOCAL.format(parseInt(contenido)) : "0";
+        // Juntamos el numero con los decimales si hay decimales
+        this.value = contenido.length ? contenido : "0";
+    }    
+    window.onload = function() {
+            //SE EJECUTA DESPUES CARGAR EL CODIGO CSS y HTML
+            // Creamos el evento keyup
+            document.querySelectorAll(".precio").forEach(el => el.addEventListener("keyup", integerFormatPositivo));
+        };
+</script>
+
+
+
+
+<!-- <script>
+    // Creamos el evento keyup
+    console.log('OK')
+    document.querySelectorAll(".precio").forEach(el => el.addEventListener("keyup", numberFormat));
+        
+    // Función que formatea el numero
+    function numberFormat(e) {
+        console.log(this.value)
+        if (this.value.trim()=="" || this.value.trim()=="-") {
+            return;
+        }
+        
+        // Obtenemos un array con el numero y los decimales si hay
+        // let contenido = this.value.replace(/[^0-9\.]/g, "").split(".");
+        let contenido = this.value.replace(/[^0-9\,]/g, "").split(",");
+
+        // añadimos los separadores de miles al primer numero del array
+        contenido[0] = contenido[0].length ? new Intl.NumberFormat('es-AR').format(parseInt(contenido[0])) : "0";
+        
+        // Juntamos el numero con los decimales si hay decimales
+        let resultado=contenido.length>1 ? contenido.slice(0, 0).join(",") : contenido[0];
+        this.value=this.value[0]=="-" ? "-"+resultado : resultado;
+    }
+</script> -->

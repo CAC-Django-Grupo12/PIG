@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'productos',
     'django_extensions',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [

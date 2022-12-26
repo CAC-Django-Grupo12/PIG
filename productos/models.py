@@ -1,8 +1,10 @@
 from django.db import models
 #from datetime import date
 from PIL import Image as Im
-import locale
 
+#import humanize
+
+import locale
 locale.setlocale(locale.LC_ALL, '')
 
 # Create your models here.
@@ -23,15 +25,19 @@ class Vehiculo(models.Model):
     categoria= models.ForeignKey(Categoria, on_delete=models.PROTECT, verbose_name='Categoría')
     descripcion= models.CharField(max_length=300, verbose_name='Descripción')
     puertas = models.CharField(max_length=1)
-    precio= models.FloatField()
+    precio= models.DecimalField(max_digits=12, decimal_places=0)
     fecha_publicacion= models.DateField(verbose_name='Fecha publicación', default=None, null=True, blank=True  )
     seleccionado=models.BooleanField(default=False,null=True)
     imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)
 
     def __str__(self):
         # return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - '+'$ {:,.2f}'.format(self.precio).replace(",", "@").replace(".", ",").replace("@", ".")+' -[ID: '+str(self.id)+']'
-        return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - $ '+locale.format('%.0f', self.precio, grouping=True, monetary=True)+' -[ID: '+str(self.id)+']'
+        # return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - $ '+locale.format('%.0f', self.precio, grouping=True, monetary=True)+' -[ID: '+str(self.id)+']'
+        # return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - $ '+humanize.intcomma(1234)+' -[ID: '+str(self.id)+']'
+        return self.marca+' - '+self.modelo+' - '+str(self.anio)+ self.precio_str(self.precio)  +' -[ID: '+str(self.id)+']'
 
+    def precio_str(self, precio):
+        return ' - $ '+locale.format('%.0f', precio, grouping=True, monetary=True)
 
     def save(self):
         super().save()
