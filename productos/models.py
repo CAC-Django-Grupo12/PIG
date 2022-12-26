@@ -1,6 +1,9 @@
 from django.db import models
 #from datetime import date
 from PIL import Image as Im
+import locale
+
+locale.setlocale(locale.LC_ALL, '')
 
 # Create your models here.
 
@@ -21,13 +24,15 @@ class Vehiculo(models.Model):
     descripcion= models.CharField(max_length=300, verbose_name='Descripción')
     puertas = models.CharField(max_length=1)
     precio= models.FloatField()
-    fecha_publicacion= models.DateField(verbose_name='Fecha publicación', default=None, null=True  )
+    fecha_publicacion= models.DateField(verbose_name='Fecha publicación', default=None, null=True, blank=True  )
     seleccionado=models.BooleanField(default=False,null=True)
     imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)
 
     def __str__(self):
-        return self.marca+' '+self.modelo+' '+str(self.anio)
-    
+        # return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - '+'$ {:,.2f}'.format(self.precio).replace(",", "@").replace(".", ",").replace("@", ".")+' -[ID: '+str(self.id)+']'
+        return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - $ '+locale.format('%.0f', self.precio, grouping=True, monetary=True)+' -[ID: '+str(self.id)+']'
+
+
     def save(self):
         super().save()
         img = Im.open(self.imagen.path)

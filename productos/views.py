@@ -98,17 +98,20 @@ def vehiculo_eliminar(request,id):
 
 @login_required
 def vehiculo_editar(request,id):
-    vehiculo = Vehiculo.objects.get(pk=id)
-    vehiculo_original = vehiculo
-    if(request.method=='POST'):
-        form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
-        if form.is_valid():
-            vehiculo.save()
-            messages.info(request,'Vehículo modificado OK')
-            return redirect('vehiculos_index')
-    else:
-        form = VehiculoForm(instance=vehiculo)
-    return render(request,'vehiculo_editar.html',{'form':form, 'id': id})
+    try:
+        vehiculo = Vehiculo.objects.get(pk=id)
+        if(request.method=='POST'):
+            form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
+            if form.is_valid():
+                vehiculo.save()
+                messages.info(request,'Vehículo modificado OK')
+                return redirect('vehiculos_index')
+        else:
+            form = VehiculoForm(instance=vehiculo)
+        return render(request,'vehiculo_editar.html',{'form':form, 'id': id})
+    except:
+        messages.error(request,'Error al editar vehículo...') 
+        return redirect('vehiculos_index')
 
 @login_required
 def vehiculo_duplicar(request,id):
