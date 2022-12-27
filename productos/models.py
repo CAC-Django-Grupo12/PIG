@@ -14,7 +14,7 @@ class Categoria(models.Model):
 
     categoria= models.CharField(max_length=20, verbose_name='Categoría')
     def __str__(self):
-        return self.categoria
+        return self.categoria+' -[ID: '+str(self.id)+']'
 
 
 class Vehiculo(models.Model):

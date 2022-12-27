@@ -96,14 +96,19 @@ def vehiculo_eliminar(request,id):
         if os.path.exists('.'+vehiculo.imagen.url) and os.path.isfile('.'+vehiculo.imagen.url):
             try:
                 os.remove('.'+vehiculo.imagen.url)
-                messages.error(request,'Imagen eliminada OK'+' -ID: '+str(id))
+                messages.error(request,'Imagen eliminada OK')   #+' -ID: '+str(id))
             except:
-                messages.error(request,'No se encontró la imagen para eliminar...'+' -ID: '+str(id))
+                messages.error(request,'Error al eliminar la imagen...') #+' -ID: '+str(id))
+        else:          
+            messages.error(request,'No se encontró la imagen para eliminar...') #+' -ID: '+str(id))
         
-        vehiculo.delete()
-        messages.error(request,'Vehículo eliminado OK') 
+        try:
+            vehiculo.delete()
+            messages.error(request,'Vehículo eliminado OK') 
+        except:
+            messages.error(request,'Error al eliminar vehículo... no se pudo eliminar') 
     except:
-        messages.error(request,'Error al eliminar vehículo...') 
+        messages.error(request,'Error al eliminar vehículo... no se encontró') 
 
     return redirect('vehiculos_index')
 
@@ -116,7 +121,6 @@ def vehiculo_editar(request,id):
             if form.is_valid():
                 try:
                     form.save()
-                    # vehiculo.save()
                     messages.info(request,'Vehículo modificado OK')
                 except:
                     messages.error(request,'Ocurrió un error al modificar vehículo...')
@@ -131,28 +135,37 @@ def vehiculo_editar(request,id):
 
 @login_required
 def vehiculo_duplicar(request,id):
-    vehiculo_origen = Vehiculo.objects.get(pk=id)
+    try:
+        vehiculo_origen = Vehiculo.objects.get(pk=id)
 
-    vehiculo = Vehiculo(
-        marca=vehiculo_origen.marca, 
-        modelo=vehiculo_origen.modelo, 
-        anio=vehiculo_origen.anio, 
-        categoria=vehiculo_origen.categoria, 
-        puertas=vehiculo_origen.puertas,
-        precio=vehiculo_origen.precio,
-        imagen=vehiculo_origen.imagen,
-    )
+        vehiculo = Vehiculo(
+            marca=vehiculo_origen.marca, 
+            modelo=vehiculo_origen.modelo, 
+            anio=vehiculo_origen.anio, 
+            categoria=vehiculo_origen.categoria, 
+            puertas=vehiculo_origen.puertas,
+            precio=vehiculo_origen.precio,
+            imagen=vehiculo_origen.imagen,
+        )
 
-    if(request.method=='POST'):
-        form = VehiculoForm(request.POST, request.FILES)    #, instance=vehiculo    )
-        if form.is_valid():
-            # vehiculo.save()
-            form.save()
-            messages.info(request,'Vehículo duplicado OK')
-            return redirect('vehiculos_index')
-    else:
-        form = VehiculoForm(instance= vehiculo)
-    return render(request,'vehiculo_duplicar.html',{'form':form, 'id': id})
+        if(request.method=='POST'):
+            form = VehiculoForm(request.POST, request.FILES)    #, instance=vehiculo    )
+            if form.is_valid():
+                try:
+                    form.save()
+                    messages.info(request,'Vehículo duplicado OK')
+                except:
+                    messages.info(request,'Error al grabar vehiculo duplicado...')
+
+                return redirect('vehiculos_index')
+        else:
+            form = VehiculoForm(instance= vehiculo)
+        return render(request,'vehiculo_duplicar.html',{'form':form, 'id': id})
+
+    except:
+        messages.info(request,'Error al duplicar vehiculo, no se encontró el original...')
+        return redirect('vehiculos_index')
+
 
 
 @login_required
@@ -233,7 +246,7 @@ def vehiculo_pdf(request,id):
             return redirect('Error404')
 
     except:
-        messages.info(request,'Error al generar el PDF /')   
+        messages.info(request,'Error al generar el PDF, no se encontró...')   
         return redirect('Error404')
 
 
@@ -314,13 +327,18 @@ class CategoriaView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            try:
-                form.save()
-                messages.success(request,'Categoría agregada OK')   
-            except:
-                form.add_error('categoria', str(ve))
+
+            if Categoria.objects.filter(categoria__icontains=form.cleaned_data['categoria']).exists():
+                messages.error(request,'Ya existe esa categoría')
             else:
-                return redirect('categorias_index')
+                try:
+                    form.save()
+                    messages.success(request,'Categoría agregada OK')   
+                except:
+                    messages.error(request,'Error al agregar categoría...')   
+                    # form.add_error('categoria', str(ve))
+
+            return redirect('categorias_index')
         
         return render(request, self.template_name, {'form': form})
 
@@ -330,11 +348,15 @@ class CategoriaView(LoginRequiredMixin, View):
 def categoria_eliminar(request,id):
     try:
         categoria = Categoria.objects.get(pk=id)
-        categoria.delete()
-        messages.error(request,'Categoría eliminada OK')   
-        return redirect('categorias_index')
-    except:     # Categoria.DoesNotExist:
-        return redirect('Error404')
+        try:
+            categoria.delete()
+            messages.error(request,'Categoría eliminada OK')
+        except:
+            messages.error(request,'Error al eliminar categoría...')
+    except:
+        messages.error(request,'Error al eliminar categoría, no se encontró...')
+    
+    return redirect('categorias_index')
 
 
 @login_required
@@ -347,15 +369,17 @@ def categoria_editar(request,id):
                 try:
                     categoria.save()
                     messages.info(request,'Categoría modificada OK')   
-                    return redirect('categorias_index')
-                except:     # Categoria.DoesNotExist:
-                    return redirect('Error404')
+                except:
+                    messages.error(request,'Error al modificar categoría')
+                return redirect('categorias_index')
 
         else:
             form = CategoriaForm(instance=categoria)
         return render(request,'categoria_editar.html',{'form':form, 'id': id})
     except:
-        return redirect('Error404')
+        messages.error(request,'Error al editar categoría, no se encontró...')
+        #return redirect('Error404')
+        return redirect('categorias_index')
 
 
 
