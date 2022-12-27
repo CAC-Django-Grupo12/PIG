@@ -11,8 +11,13 @@ instalo requerimientos:
 	pip install -r requirements.txt
 verifico con:
 	pip freeze
+creo la base de datos con pgAdmin
+	name: PIG
+ejecuto las migraciones:
+	python manage.py migrate
 pruebo:
 	python manage.py runserver
+
 
 me voy a VSC
 

@@ -54,11 +54,22 @@ class VehiculosListView(LoginRequiredMixin, ListView):
 
 class VehiculoView(LoginRequiredMixin, View):
     form_class = VehiculoForm
-    #initial = {'key': 'value'}
+    # cargo valores iniciales para pruebas rapidas...
+    initial = {
+        'marca': 'TOYOTA',
+        'modelo': 'Corolla',
+        'anio': '2022',
+        'categoria': '1',
+        'descripcion': 'descripción xxx',
+        'puertas': '4',
+        'precio': 0,
+        'seleccionado': True,
+        # 'imagen': '',
+        }
     template_name = 'vehiculo_nuevo.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()    #initial= self.initial)
+        form = self.form_class(initial= self.initial)
         return render(request, self.template_name, {'form':form})
     
     def post(self, request, *args, **kwargs):
@@ -71,7 +82,7 @@ class VehiculoView(LoginRequiredMixin, View):
             except:
                 messages.error(request,'Ocurrió un error al agregar vehículo...')
                 #form.add_error('vehiculo', str(ve))
-            else:
+            finally:
                 return redirect('vehiculos_index')
         
         return render(request, self.template_name, {'form': form})
@@ -103,8 +114,13 @@ def vehiculo_editar(request,id):
         if(request.method=='POST'):
             form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
             if form.is_valid():
-                vehiculo.save()
-                messages.info(request,'Vehículo modificado OK')
+                try:
+                    form.save()
+                    # vehiculo.save()
+                    messages.info(request,'Vehículo modificado OK')
+                except:
+                    messages.error(request,'Ocurrió un error al modificar vehículo...')
+
                 return redirect('vehiculos_index')
         else:
             form = VehiculoForm(instance=vehiculo)
@@ -128,9 +144,10 @@ def vehiculo_duplicar(request,id):
     )
 
     if(request.method=='POST'):
-        form = VehiculoForm(request.POST, request.FILES, instance=vehiculo    )
+        form = VehiculoForm(request.POST, request.FILES)    #, instance=vehiculo    )
         if form.is_valid():
-            vehiculo.save()
+            # vehiculo.save()
+            form.save()
             messages.info(request,'Vehículo duplicado OK')
             return redirect('vehiculos_index')
     else:
