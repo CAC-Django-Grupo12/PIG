@@ -2,6 +2,8 @@ from django.db import models
 #from datetime import date
 from PIL import Image as Im
 
+from django.contrib.auth.models import User
+
 #import humanize
 
 import locale
@@ -13,9 +15,21 @@ locale.setlocale(locale.LC_ALL, '')
 class Categoria(models.Model):
 
     categoria= models.CharField(max_length=20, verbose_name='Categoría')
+
+    creacion_fecha = models.DateTimeField(auto_now=True)
+    creacion_usuario = models.ForeignKey(User, on_delete=models.PROTECT)
+    creacion_usuario = models.IntegerField()
+    modificacion_fecha = models.DateTimeField(null=True)
+    modificacion_usuario = models.IntegerField(null=True)
+
     def __str__(self):
         return self.categoria+' -[ID: '+str(self.id)+']'
 
+    def save(self, *args, **kwargs):
+        # self.creacion_usuario_id = 1
+
+        super().save()
+ 
 
 class Vehiculo(models.Model):
 

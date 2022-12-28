@@ -11,6 +11,7 @@ from django.views import View
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.models import User
 
 #Import para enviar correos
 from django.conf import settings
@@ -31,6 +32,7 @@ import matplotlib.pyplot as plt
 
 import os
 
+from django.utils import timezone
 
 
 def inicio(request):
@@ -326,6 +328,7 @@ class CategoriaView(LoginRequiredMixin, View):
     
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        self.creacion_usuario = request.user.id
         if form.is_valid():
 
             if Categoria.objects.filter(categoria__icontains=form.cleaned_data['categoria']).exists():
@@ -365,6 +368,8 @@ def categoria_editar(request,id):
         categoria = Categoria.objects.get(pk=id)
         if(request.method=='POST'):
             form = CategoriaForm(request.POST, instance=categoria)
+            categoria.modificacion_fecha = timezone.now()
+            categoria.modificacion_usuario = request.user.id
             if form.is_valid():
                 try:
                     categoria.save()
