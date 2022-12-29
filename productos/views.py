@@ -11,7 +11,6 @@ from django.views import View
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-#from django.contrib.auth.models import User
 
 #Import para enviar correos
 from django.conf import settings
@@ -75,7 +74,7 @@ class VehiculoView(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form':form})
     
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, request.FILES)
+        form = self.form_class(request.POST, request.FILES or None)
         if form.is_valid():
             try:
                 form.save()
@@ -119,7 +118,7 @@ def vehiculo_editar(request,id):
     try:
         vehiculo = Vehiculo.objects.get(pk=id)
         if(request.method=='POST'):
-            form = VehiculoForm(request.POST, request.FILES, instance=vehiculo)
+            form = VehiculoForm(request.POST, request.FILES or None, instance=vehiculo)
             if form.is_valid():
                 try:
                     form.save()
@@ -298,7 +297,8 @@ class CategoriasListView(LoginRequiredMixin, ListView):
     model = Categoria
     context_object_name= 'categorias'
     template_name= 'categorias_index.html'
-    #ordering= ['id']
+    queryset= model.objects.filter(eliminacion_fecha__isnull=True)
+    ordering= ['categoria']
 
 
 # def categoria_nueva(request):
@@ -319,16 +319,17 @@ class CategoriasListView(LoginRequiredMixin, ListView):
 
 class CategoriaView(LoginRequiredMixin, View):
     form_class = CategoriaForm
-    #initial = {'key': 'value'}
+    #initial = {'clave': 'valor'}
     template_name = 'categoria_nueva.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()    #initial= self.initial)
+        form = self.form_class()        #initial= self.initial)
         return render(request, self.template_name, {'form':form})
     
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        self.creacion_usuario = request.user.id
+        form.instance.creacion_usuario = request.user.id
+        
         if form.is_valid():
 
             if Categoria.objects.filter(categoria__icontains=form.cleaned_data['categoria']).exists():
@@ -352,7 +353,8 @@ def categoria_eliminar(request,id):
     try:
         categoria = Categoria.objects.get(pk=id)
         try:
-            categoria.delete()
+            categoria.eliminacion_usuario = request.user.id
+            categoria.soft_delete()
             messages.error(request,'Categoría eliminada OK')
         except:
             messages.error(request,'Error al eliminar categoría...')

@@ -3,6 +3,7 @@ from django.db import models
 from PIL import Image as Im
 
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 #import humanize
 
@@ -14,20 +15,24 @@ locale.setlocale(locale.LC_ALL, '')
 
 class Categoria(models.Model):
 
-    categoria= models.CharField(max_length=20, verbose_name='Categoría')
+    categoria= models.CharField(max_length=20, verbose_name='Categoría', unique=True)
 
     creacion_fecha = models.DateTimeField(auto_now=True)
     creacion_usuario = models.ForeignKey(User, on_delete=models.PROTECT)
     creacion_usuario = models.IntegerField()
     modificacion_fecha = models.DateTimeField(null=True)
     modificacion_usuario = models.IntegerField(null=True)
+    eliminacion_fecha = models.DateTimeField(null=True)
+    eliminacion_usuario = models.IntegerField(null=True)
 
     def __str__(self):
         return self.categoria+' -[ID: '+str(self.id)+']'
 
-    def save(self, *args, **kwargs):
-        # self.creacion_usuario_id = 1
+    # def save(self, *args, **kwargs):
+    #     super().save()
 
+    def soft_delete(self):
+        self.eliminacion_fecha =  timezone.now()
         super().save()
  
 
