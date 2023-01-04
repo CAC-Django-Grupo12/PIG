@@ -332,7 +332,9 @@ class CategoriaView(LoginRequiredMixin, View):
         
         if form.is_valid():
 
-            if Categoria.objects.filter(categoria__icontains=form.cleaned_data['categoria']).exists():
+            # controla alta repetida nombre categoria, solo de registros no eliminados (soft)
+            categoria_control = Categoria.objects.exclude(eliminacion_fecha__isnull=False)
+            if categoria_control.filter(categoria__icontains=form.cleaned_data['categoria']).exists():
                 messages.error(request,'Ya existe esa categoría')
             else:
                 try:

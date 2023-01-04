@@ -15,7 +15,7 @@ locale.setlocale(locale.LC_ALL, '')
 
 class Categoria(models.Model):
 
-    categoria= models.CharField(max_length=20, verbose_name='Categoría', unique=True)
+    categoria= models.CharField(max_length=20, verbose_name='Categoría')    #, unique=True
 
     creacion_fecha = models.DateTimeField(auto_now=True)
     creacion_usuario = models.ForeignKey(User, on_delete=models.PROTECT)
