@@ -1,0 +1,152 @@
+==========================================
+UBUNTU LINUX
+==========================================
+
+Descargar ISO para Desktop desde: https://ubuntu.com/download/desktop
+Requesitos mínimos: 4Gb Ram; 2 procesadores; 25Gb HDD
+
+- Pasos para la instalación una vez iniciada la ISO
+- Seleccionar Teclado
+- Instalación Mínima
+- Destildar "Download Updates While Installing Ubuntu"
+- "Erase disk and install Ubuntu"
+- "Write the changes to disk?" - Continue
+- Elegir zona horaria
+- User name, password
+- Reiniciar
+
+- Primer inicio de sesión
+- Connect Your Online Accounts - Skip
+- Livepatch - Next
+- Help improve Ubuntu - "No, don't send system info" - Next
+- Privacy
+- You're ready to go! - Done
+
+- Actualizar el sistema operativo
+- Desde la terminal tipear comando: sudo apt upgrade
+- Desde la terminal tipear comando: reboot
+
+- Chequear versión de python
+- Desde la terminal tipear comando: python3
+
+- Verificar pip
+- Desde la terminal tipear comando: pip3
+- Si sale aviso que no se encuentra instalado
+- Desde la terminal tipear comando: sudo apt install python3-pip
+
+- Instalar autopep8 para formateo adecuado en archivos py
+- Desde la terminal tipear comando: pip3 install autopep8
+
+==========================================
+DJANGO
+==========================================
+
+- Instalación de VENV
+- Desde la terminal tipear comando: sudo apt install python3.10-venv
+- Crear carpeta principal de django que contendrá todos los proyectos (desde el explorador de archivos)
+- Creación del VENV desde la consola: python3 -m venv venv
+- Activación del VENV
+- Desde la terminal tipear comando: source venv/bin/activate
+
+- Instalación Django
+- Desde la terminal tipear comando: pip install django
+- Chequear versión de Django
+- Desde la terminal tipear comando: django-admin --version
+
+- Estando parado dentro de la carpeta principal de django
+- Desde la terminal tipear comando: django-admin startproject nombreproyecto
+
+- Verificar si Django se ha instalado correctamente
+- Estando dentro de la carpeta del proyecto django que se acaba de crear
+- ejecutar el servidor
+- Desde la terminal tipear comando: python manage.py runserver localhost:8000
+- Abrir navegador e ingresar esa ruta: localhost:8000
+- Debería verse la página de Bienvenida de Django
+
+- Cerrar El Navegador
+- Cerrar la terminal con el VENV activado
+
+==========================================
+VISUAL STUDIO CODE
+==========================================
+
+- Desde "Ubuntu Software" buscar "Visual Studio Code"
+- Instalar
+- Dar inicio a visual studio code por primera vez
+- Elegir el tema
+
+- Verificar que está funcionando Python de forma correcta
+- Crear carpeta de proyecto genérica
+- Abrir vscode - abrir carpeta
+- Crear archivo con saludo "hola mundo" y probar la salida por consola
+
+- Extensiones de vs code para django: Python extension for Visual Studio Code - Microsoft
+
+- Una vez instalado y configurado django
+- Abrir visual studio code
+- Menu "file" -> "open folder" -> abrir la carpeta del proyecto que se creó con django-admin startproject nombreproyecto
+
+- Crear el archivo ".gitignore"
+- Agregar líneas
+
+### Django ###
+ __pycache__/
+
+# Environments
+venv/
+
+- En el menú de Visual Studio Code ir al menú "Run" -> "Start Debugging"
+- Visual Studio Code solicitará ingresar el debugger elegir "Django" (si no aparece primero elegir Python luego elegir "Django")
+- En la terminal teclear haciendo ctrl + localhost:8000 se abrirá la página de bienvenida de Django
+
+- Una vez terminada de configurar la base de datos se puede correr este comando para conocer los requisitos del proyecto
+pip freeze > requirements.txt
+
+==========================================
+GIT
+==========================================
+
+- Instalación de Git
+- Desde la terminal tipear comando: sudo apt install git
+- Configurar el correo de Git
+- Desde la terminal tipear comando: config --global user.mail "name@mail.com"
+- Configurar el usuario de Git:
+- Desde la terminal tipear comando: git config --global user.name "username"
+- Clonar el repositorio de Git
+- Desde la terminal tipear comando: git clone link-del-repositorio
+                                    git clone https://github.com/CAC-Django-Grupo12/PIG.git
+
+==========================================
+POSTGRESQL
+==========================================
+
+- Instalar PostgreSQL
+- Desde la terminal tipear comando: sudo apt-get install postgresql
+
+- Iniciar PostgreSQL
+- Desde la terminal tipear comando: sudo -u postgres psql
+- A partir de este momento en el prompt se notará diferente (postgres=#), esto indica que estamos dentro de PostgreSQL pero en el modo consola
+- El usuario por defecto es "postgres"
+- Lo primero es asignar la contraseña del usuario por defecto.
+- Desde la terminal tipear comando: \password postgres
+- Ingresar la nueva password
+- Luego se crea la base de datos
+- Desde la terminal tipear comando: CREATE DATABASE nombre_base_de_datos_aqui;
+
+- Comandos útiles desde consola estando dentro de PostgreSQL
+- Para conocer la base de datos  el nombre de usuario a donde estamos conectados
+- Desde la terminal tipear comando: \conninfo
+- Para listar las bases de datos existentes
+- Desde la terminal tipear comando: \l
+- Para cambiar a la base de datos que corresponde
+- Desde la terminal tipear comando: \c nombre_base_de_datos
+- Para salir de PostgreSQL en modo consola
+- Desde la terminal tipear comando: \q
+
+- Instalar conector con la base de datos PostgreSQL
+- Desde la terminal tipear comando: pip install psycopg2-binary
+
+- Comando para abrir el servidor de PostgreSQL desde Ubuntu
+- Es importante tener siempre la base de datos corriendo
+- Desde la terminal tipear comando: psql -h localhost -U postgres -d nombre_base_de_datos
+- Se debe mantener abierta la terminal luego de este comando
