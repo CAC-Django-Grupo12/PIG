@@ -17,7 +17,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 #Paginacion
-from django.core.paginator import Paginator
+#from django.core.paginator import Paginator
 
 #Import para generar PDF
 import io
@@ -65,7 +65,7 @@ class VehiculoView(LoginRequiredMixin, View):
         'puertas': '4',
         'precio': 0,
         'seleccionado': True,
-        # 'imagen': '',
+        # 'imagen': "",
         }
     template_name = 'vehiculo_nuevo.html'
 
@@ -115,7 +115,7 @@ def vehiculo_eliminar(request,id):
 
 @login_required
 def vehiculo_editar(request,id):
-    try:
+    # try:
         vehiculo = Vehiculo.objects.get(pk=id)
         if(request.method=='POST'):
             form = VehiculoForm(request.POST, request.FILES or None, instance=vehiculo)
@@ -130,9 +130,9 @@ def vehiculo_editar(request,id):
         else:
             form = VehiculoForm(instance=vehiculo)
         return render(request,'vehiculo_editar.html',{'form':form, 'id': id})
-    except:
-        messages.error(request,'Error al editar vehículo...') 
-        return redirect('vehiculos_index')
+    # except:
+        # messages.error(request,'Error al editar vehículo...') 
+        # return redirect('vehiculos_index')
 
 @login_required
 def vehiculo_duplicar(request,id):

@@ -2,7 +2,7 @@ from django.db import models
 #from datetime import date
 from PIL import Image as Im
 
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.utils import timezone
 
 #import humanize
@@ -51,7 +51,11 @@ class Vehiculo(models.Model):
     precio= models.DecimalField(max_digits=12, decimal_places=0)
     fecha_publicacion= models.DateField(verbose_name='Fecha publicación', default=None, null=True, blank=True  )
     seleccionado=models.BooleanField(default=False,null=True)
-    imagen=models.ImageField(upload_to='upload/',verbose_name="Imagen:",default=None,null=True)
+    imagen=models.ImageField(
+            upload_to='upload/',
+            verbose_name="Imagen:",
+            default='upload/carro.jpg',
+            null=True, blank=True)
 
     def __str__(self):
         # return self.marca+' - '+self.modelo+' - '+str(self.anio)+' - '+'$ {:,.2f}'.format(self.precio).replace(",", "@").replace(".", ",").replace("@", ".")+' -[ID: '+str(self.id)+']'

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-<!-- {% load humanize %} -->
+{% load humanize %}
 
 
 {% block js  %}
@@ -63,8 +63,8 @@
                             <td>{{vehiculo.marca}}</td>
                             <td>{{vehiculo.modelo}}</td>
                             <td>{{vehiculo.anio}}</td>
-                            <td>$ {{vehiculo.precio|floatformat:0|intcomma}}</td>
-
+                            <!-- <td>$ {{vehiculo.precio|floatformat:0|intcomma}}</td> -->
+                            <td>$ {{vehiculo.precio|intcomma}}</td>
                             <td>
                                 <img src="{{ vehiculo.imagen.url }}"alt="" width="70px">
                             </td>

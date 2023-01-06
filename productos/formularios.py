@@ -20,7 +20,7 @@ class VehiculoForm(forms.ModelForm):
             'precio': forms.NumberInput(attrs={'class': 'precio form-control','type':'int'}),
             'fecha_publicacion': forms.DateInput(attrs={'class': 'form-control','type':'text'}),
             'seleccionado': forms.CheckboxInput(attrs={'class': 'form-check-input'}), 
-            'imagen': forms.FileInput(attrs={'class':'form-control', 'multiple':True})
+            'imagen': forms.FileInput(attrs={'class':'form-control'})
 
         }
         error_messages= {
